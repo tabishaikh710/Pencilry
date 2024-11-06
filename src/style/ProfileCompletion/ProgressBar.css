@@ -1,0 +1,25 @@
+/* ProfileCompletion/ProgressBar.css */
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    margin: 20px 0;
+  }
+  
+  .progress-bar {
+    height: 20px;
+    background-color: #4caf50; /* Change this color as needed */
+    transition: width 0.4s ease-in-out; /* Smooth animation */
+  }
+  
+  .progress-text {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-weight: bold;
+  }
+  

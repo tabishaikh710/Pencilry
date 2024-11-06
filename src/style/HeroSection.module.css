@@ -1,0 +1,84 @@
+/* Keyframes for Heading Animation */
+/* @keyframes fadeInFromTop {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+} */
+
+/* Keyframes for Paragraph Animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Keyframes for Button Bounce on Hover */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Hero Section Container */
+.contain {
+  text-align: center;
+  padding: 200px;
+  position: relative;
+  z-index: 2; /* Ensure content appears above the overlay */
+  color: white;
+  text-align: center;
+}
+
+
+/* Heading Animation */
+.heading {
+  font-weight: 900;
+  /* animation: fadeInFromTop 1.5s ease-out; */
+}
+
+
+/* Paragraph Animation */
+.para {
+  animation: fadeIn 2s ease-out;
+  animation-delay: 0.5s; /* Delayed to make it appear after heading */
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+
+/* Button Bounce on Hover */
+.but {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #8f5e8c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+
+  /* Button animation on load */
+  animation: fadeIn 2s ease-out;
+  animation-delay: 1s; /* Appear after paragraph */
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.but:hover {
+  transform: scale(1.1); /* Grow slightly */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Add shadow */
+
+  /* Background gradient transition */
+  background: linear-gradient(90deg, #743e81 0%, #b497af 50%, #813e76 100%);
+}
+

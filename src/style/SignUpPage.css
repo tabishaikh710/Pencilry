@@ -1,0 +1,11 @@
+.signup-page {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  .signup-options {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  

@@ -1,0 +1,27 @@
+.apple-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #000; /* Apple's signature black button */
+    color: white;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .apple-btn:hover {
+    background-color: #333;
+  }
+  
+  .apple-icon {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+  }
+  

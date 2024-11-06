@@ -1,0 +1,17 @@
+.search-bar input {
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-bottom: 0;
+  }
+  
+  .search-bar input:focus {
+    border-color: #333;
+  }
+  
+
+  .search-bar {
+    width: 35%;
+}

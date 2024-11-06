@@ -1,0 +1,117 @@
+.tabcontent{
+    margin-top: 150px;
+}
+
+.container{
+    display: flex;
+}
+
+.innercontainerRight{
+    width: 50%;
+    justify-content: center;
+
+}
+.innercontainerLeft{
+    width: 50%;
+    justify-content: center;
+}
+
+.para{
+    font-size: 18px;
+   
+}
+
+.head{
+    display: block;
+}
+
+
+.inputField{
+    border: 0px solid !important;
+    background: #2428281f;
+    border-radius: 21px !important;
+}
+
+.skillSelect{
+    background-color: rgb(107, 79, 46);
+
+}
+
+
+.searchField {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .skillsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .skillButton {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: #585555;
+    cursor: pointer;
+  }
+  
+  .selectedSkills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .selectedSkill {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    
+    border-radius: 20px;
+  }
+  
+  .removeButton {
+    margin-left: 8px;
+    background: none;
+    border: none;
+    color: #ff5f5f;
+    cursor: pointer;
+  }
+
+
+  .budgetInputContainer {
+    position: relative;
+    width: 120px;
+  }
+  
+  /* Dollar sign styling */
+  .dollarSign {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  /* Input styling */
+  .budgetInput {
+    width: 100%;
+    padding: 8px 10px 8px 24px; /* Padding to make space for dollar sign */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    appearance: textfield; /* Removes number input arrows on Firefox */
+  }
+  
+  .budgetInput::-webkit-outer-spin-button,
+  .budgetInput::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Removes number input arrows on Chrome */
+    margin: 0;
+  }
+  

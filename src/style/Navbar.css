@@ -1,0 +1,67 @@
+/* General Navbar Styling */
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+img.logo-nav {
+  position: absolute;
+  width: 58px;
+  top: 7px;
+  background: white;
+  padding: 15px;
+  /* left: 78px; */
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0eaea;
+  
+  padding: 1rem 2rem;
+  position: fixed;
+  min-width: 100%;
+  z-index: 3;
+
+  /* Animation */
+  animation: slideIn 1s ease-out;
+}
+  /* .logo a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+  } */
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav-links li {
+    margin: 0;
+  }
+  
+  .nav-links a {
+    color: #070707;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .nav-links a:hover {
+    color: #BA806C; /* Link hover effect */
+  }
+  
+
+  .navbar ul {
+    margin-left: 50px;
+}

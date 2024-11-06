@@ -1,0 +1,52 @@
+.homeHero {
+    position: relative;
+    height: 80vh; /* Set height for the hero section */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1; /* Ensure content is above the overlay */
+    overflow: hidden; /* Prevent overflow during animation */
+}
+
+.homeHero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/src/assets/hero1.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* opacity: 0.5;  */
+    z-index: -1; /* Position the overlay behind the content */
+    animation: slide 50s infinite; /* Animation for background sliding */
+}
+
+/* Keyframes for slide animation */
+@keyframes slide {
+    0% {
+        background-image: url(/src/assets/hero1.png);
+    }
+    33% {
+        background-image: url(/src/assets/hero2.png);
+    }
+    66% {
+        background-image: url(/src/assets/hero3.png);
+    }
+    100% {
+        background-image: url(/src/assets/hero1.png);
+    }
+}
+
+
+
+.contain{
+    padding: 100px 0px;
+}

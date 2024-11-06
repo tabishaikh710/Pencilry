@@ -1,0 +1,85 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .login-label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+  }
+  
+  .login-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .login-input:focus {
+    border-color: #3a8dff;
+  }
+  
+  /* .continue-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745; /* Green color for the button */
+    /* color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  } */ 
+  
+  
+
+
+ /* Base style for the continue button */
+.continue-btn {
+  width: 100%; /* Full width button */
+  padding: 12px 20px; /* Padding for button size */
+  background-image: linear-gradient(90deg, #ff8a00, #da1b60); /* Gradient matching the heading */
+  color: white; /* White text color */
+  border: none; /* Removes default border */
+  border-radius: 8px; /* Slightly rounded edges for a modern feel */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  font-size: 18px; /* Larger font size for prominence */
+  font-weight: bold; /* Bold font for emphasis */
+  transition: background-image 0.3s ease, transform 0.2s ease; /* Smooth transition for background and scale on interaction */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+/* Hover effect for the continue button */
+.continue-btn:hover {
+  background-image: linear-gradient(90deg, #e67600, #c01250); /* Darker gradient on hover */
+  transform: scale(1.05); /* Slightly enlarges the button on hover */
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3); /* Deepens the shadow for more emphasis */
+}
+
+/* Active state (when the button is clicked) */
+.continue-btn:active {
+  background-image: linear-gradient(90deg, #bf5e00, #a41040); /* Darker gradient when clicked */
+  transform: scale(0.98); /* Slightly reduces size to mimic pressing */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); /* Shrinks shadow on click */
+}
+
+/* Disabled state */
+.continue-btn:disabled {
+  background-color: #c4c4c4; /* Light gray for disabled state */
+  cursor: not-allowed; /* Disabled cursor */
+  box-shadow: none; /* Removes shadow when disabled */
+  opacity: 0.6; /* Reduces opacity to indicate disabled state */
+}

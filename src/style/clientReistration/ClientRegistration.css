@@ -1,0 +1,67 @@
+/* style/ClientRegistration.css */
+.client-registration {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .login-link {
+    margin-top: 20px;
+  }
+  
+  .login-link a {
+    color: #28a745;
+    text-decoration: none;
+  }
+  
+
+
+
+
+
+
+
+
+
+  body {
+    background: radial-gradient(circle, #d4bfe8, #e4f0ec, #cbeaf0); /* Create a circular gradient */
+    background-size: 400% 400%; /* Allow for a smooth transition */
+    animation: gradient 15s ease infinite; /* Adjust timing as needed */
+  }
+  
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%; /* Start position */
+    }
+    25% {
+      background-position: 100% 50%; /* Transition to the right */
+    }
+    50% {
+      background-position: 100% 0%; /* Move to the top */
+    }
+    75% {
+      background-position: 0% 0%; /* Transition to the left */
+    }
+    100% {
+      background-position: 0% 50%; /* Return to start */
+    }
+  }
+  
+
+  ::selection {
+    background: #2b5876;
+    color: #fff;
+  }
+  
