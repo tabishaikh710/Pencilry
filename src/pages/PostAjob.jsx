@@ -428,6 +428,33 @@ const PostAjob = () => {
           </div>
         );
 
+
+
+
+        case 8:
+        return (
+          <div className={`container ${style.container}`}>
+            <div className={style.innercontainerLeft}>
+              <h1 className={style.head}>Start the conversation.</h1>
+              <p className={style.para}>
+              Talent are looking for:
+              </p>
+              <ul>
+                <li>Clear expectations about your task or deliverables</li>
+                <li>The skills required for your work</li>
+                <li>Good communication</li>
+                <li>Details about how you or your team like to work</li>
+              </ul>
+            </div>
+
+            <div className={style.innercontainerRight}>
+            
+
+
+            </div>
+          </div>
+        );
+
         
 
 
