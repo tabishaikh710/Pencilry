@@ -12,7 +12,9 @@ const PostAjob = () => {
     projectDuration: "",
     experienceLevel: "",
     contractToHire: "",
-    budget: ""
+    budget: "",
+    document:"",
+    description: ""
   });
   const totalPages = 10;
   const popularSkills = [
@@ -450,6 +452,27 @@ const PostAjob = () => {
             <div className={style.innercontainerRight}>
             
 
+            <textarea
+
+            onChange={handleChange} 
+            name="description"
+            value={formData.description}
+            className={style.textarea}
+            placeholder="Tell us about your project"
+            
+
+            /><br />
+            
+
+
+            <input type="file" 
+            placeholder="Attach file "
+            name="document"
+            className={style.fileInput}
+            onChange={handleChange} 
+            value={formData.document}
+
+            />
 
             </div>
           </div>
