@@ -16,7 +16,7 @@ const PostAjob = () => {
     document:"",
     description: ""
   });
-  const totalPages = 10;
+  const totalPages = 9;
   const popularSkills = [
     "Digital Painting (Photoshop, Procreate, Illustrator)",
     "Graphic Design (Logos, Branding, Posters)",
@@ -31,6 +31,38 @@ const PostAjob = () => {
     "Photo Manipulation and Retouching",
     "Visual Effects (VFX)",
   ];
+  const validation=()=>{
+    switch (currentTab) {
+      case 1:
+        return formData.title.trim() !== "" && formData.title.length >= 2  ;
+      case 2:
+        return formData.skills.length > 0;
+      case 3:
+        return formData.projectSize.trim() !== "";
+      case 4:
+        return formData.projectDuration.trim() !== "";
+      case 5:
+        return formData.experienceLevel.trim() !== "";
+      case 6:
+        return formData.contractToHire.trim() !== "";
+      case 7:
+        return formData.budget.trim() !== "";
+      case 8:
+        return formData.description.trim() !== "" && formData.document.trim() !== "";
+      default:
+        return true;
+    }
+   }
+    
+
+   const handleSubmit= (e)=>{
+     
+    e.preventDefault();
+
+    setCurrentTab(currentTab ==9)
+
+   }
+
 
   const handleSkillSelect = (skill) => {
     if (!formData.skills.includes(skill)) {
@@ -66,7 +98,7 @@ const PostAjob = () => {
   };
 
   const handleNextPage = () => {
-    if (currentTab < totalPages) setCurrentTab(currentTab + 1);
+    if (currentTab < totalPages && validation()) setCurrentTab(currentTab + 1);
   };
 
   const handlePrevPage = () => {
@@ -488,6 +520,9 @@ const PostAjob = () => {
     }
   };
 
+ 
+
+
   return (
     <>
       <ClientNav />
@@ -508,9 +543,9 @@ const PostAjob = () => {
           <span style={{ margin: "0 10px" }}>Page {currentTab}</span>
   
           {currentTab === 8 ? (
-            <button>Submit</button>
+            <button onClick={handleSubmit}>Submit</button>
           ) : (
-            <button onClick={handleNextPage} disabled={currentTab === totalPages}>
+            <button onClick={handleNextPage} disabled={currentTab === totalPages && !validation()}  >
               Next
             </button>
           )}
