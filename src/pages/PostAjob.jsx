@@ -497,7 +497,7 @@ const PostAjob = () => {
             <div className={style.tabcontent}>{renderContent()}</div>
           </div>
         </div>
-
+  
         <div
           className="pagination-controls"
           style={{ marginTop: "20px", textAlign: "center" }}
@@ -506,13 +506,18 @@ const PostAjob = () => {
             Previous
           </button>
           <span style={{ margin: "0 10px" }}>Page {currentTab}</span>
-          <button onClick={handleNextPage} disabled={currentTab === totalPages}>
-            Next
-          </button>
+  
+          {currentTab === 8 ? (
+            <button>Submit</button>
+          ) : (
+            <button onClick={handleNextPage} disabled={currentTab === totalPages}>
+              Next
+            </button>
+          )}
         </div>
       </section>
     </>
-  );
+  )
 };
 
 export default PostAjob;

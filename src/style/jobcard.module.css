@@ -2,7 +2,7 @@
 .card {
     display: flex;
     align-items: center;
-    background-color: #fff;
+   
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -10,13 +10,13 @@
     max-width: 540px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
    min-height: 100%;
-   background-color: #ffffff8c;
+   background-color: #0e0d0d29;
 }
 
 /* Hover Effect */
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 16px rgba(245, 103, 103, 0.2);
 }
 
 /* Card Image */
