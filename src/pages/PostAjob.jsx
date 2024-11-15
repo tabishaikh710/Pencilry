@@ -516,7 +516,7 @@ const PostAjob = () => {
 
 
       default:
-        return <h1>comeing soon</h1>;
+        return <h1>form submited</h1>;
     }
   };
 
