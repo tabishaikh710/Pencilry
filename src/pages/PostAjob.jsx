@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import ClientNav from "../components/ClientNevbar"; // Correct component import
 import style from "../style/PostAjob.module.css";
+import Model from "../components/globalComponents/Modle.jsx"
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 
 const PostAjob = () => {
   const [currentTab, setCurrentTab] = useState(1);
@@ -16,6 +18,8 @@ const PostAjob = () => {
     document:"",
     description: ""
   });
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const messpopup="fill the form first";
   const totalPages = 9;
   const popularSkills = [
     "Digital Painting (Photoshop, Procreate, Illustrator)",
@@ -521,8 +525,13 @@ const PostAjob = () => {
   };
 
  
-
-
+  const handlepopup = () => {
+    
+    setIsPopupVisible(true);
+  };
+  const closePopup = () => {
+    setIsPopupVisible(false); // Close the modal
+  };
   return (
     <>
       <ClientNav />
@@ -532,7 +541,7 @@ const PostAjob = () => {
             <div className={style.tabcontent}>{renderContent()}</div>
           </div>
         </div>
-  
+
         <div
           className="pagination-controls"
           style={{ marginTop: "20px", textAlign: "center" }}
@@ -541,16 +550,26 @@ const PostAjob = () => {
             Previous
           </button>
           <span style={{ margin: "0 10px" }}>Page {currentTab}</span>
-  
+
           {currentTab === 8 ? (
-            <button onClick={handleSubmit}>Submit</button>
-          ) : (
-            <button onClick={handleNextPage} disabled={currentTab === totalPages && !validation()}  >
-              Next
-            </button>
-          )}
+      <button onClick={handleSubmit}>Submit</button>
+    ) : (
+      <button
+        onClick={() => {
+          if (!validation()) {
+            handlepopup(); // Show popup if validation fails
+          } else {
+            handleNextPage(); // Proceed to next page if validation passes
+          }
+        }}
+        // disabled={!validation()}
+      >
+        Next
+      </button>
+    )}
         </div>
       </section>
+      {isPopupVisible && <Model mess={messpopup} closePopup={closePopup} />}
     </>
   )
 };
