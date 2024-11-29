@@ -12,3 +12,18 @@
 .welcomePage h1{
     font-size: 30px;
 }
+
+.bottomIllustretoWelcome{
+    display: flex;
+
+}
+
+
+.Ilbutton{
+    width: 40%;
+    margin: 10px;
+}
+
+.bottomIllustretoWelcome p{
+margin-top: 10px;
+}
