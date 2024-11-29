@@ -1,5 +1,18 @@
+import { useNavigate } from 'react-router-dom';
 import  style  from "../style/illustretorRegistretion/iillustratorWel.module.css";
 function IllustratorWelcomePage() {
+    
+   const navigate = useNavigate();
+
+  const getsubmite= (e)=>{
+   
+    e.preventDefault();
+    
+    navigate('/profile-completion');
+
+  }
+       
+
     return(
         <>
         <div className={style.welcomePage}>
@@ -12,7 +25,7 @@ function IllustratorWelcomePage() {
                 <li>Get paid safely and know we’re there to help</li>
             </ul>
             <div className={style.bottomIllustretoWelcome}> 
-            <button className={style.Ilbutton}>
+            <button className={style.Ilbutton} onClick={getsubmite}>
                 Get started
             </button>
             <p>
