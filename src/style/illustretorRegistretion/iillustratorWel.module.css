@@ -1,0 +1,14 @@
+.welcomePage{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color:rgba(0, 0, 0, 0.158);
+    padding: 50px;
+
+    
+    
+}
+
+.welcomePage h1{
+    font-size: 30px;
+}

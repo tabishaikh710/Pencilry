@@ -28,6 +28,7 @@ function App() {
         <Route path="/profile-completion" element={<ProfileCompletionPage />} />
         <Route path="/client-welcome" element={<ClientWelcomePage />} />
         <Route path="/illustrator-welcome" element={<IllustratorWelcomePage />} />
+        
         {/* Add other routes as needed */}
       </Routes>
     </Router>
