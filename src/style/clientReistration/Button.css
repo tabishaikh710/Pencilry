@@ -2,7 +2,7 @@
    button {
     
     padding: 12px 20px; /* Padding for button size */
-    background-image: linear-gradient(90deg, #ff8a00, #da1b60); /* Gradient matching the heading */
+    background-image: linear-gradient(90deg, #a871c1, #567a6c); /* Gradient matching the heading */
     color: white; /* White text color */
     border: none; /* Removes default border */
     border-radius: 8px; /* Slightly rounded edges for a modern feel */

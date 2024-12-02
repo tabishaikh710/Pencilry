@@ -6,7 +6,13 @@ function paging() {
     return(
 <>
 <div className={style.container}>
-    <h1>uyhdfuas</h1>
+    <div className={style.paging}>
+    <button className={style.prev}>Prev</button>
+    <button className={style.next} >Next</button>
+    
+
+
+    </div>
 
 </div>
 

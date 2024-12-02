@@ -1,14 +1,34 @@
+/* Container styling */
 .container {
     min-height: 90vh; /* Ensures the container spans the full height of the viewport */
     width: 90%; /* Ensures the container spans the full width of the viewport */
     display: flex; /* Enables Flexbox layout */
-    justify-content: center; /* Centers content horizontally (X-axis) */
-    align-items: center; /* Centers content vertically (Y-axis) */
+    flex-direction: column; /* Stacks items vertically */
+    justify-content: flex-start; /* Aligns content at the top */
     margin: auto; /* Ensures there's no extra margin on the container */
     box-sizing: border-box; /* Ensures padding and border are included in width/height */
-    
     margin-top: 5vh; /* Adds a top margin of 5% viewport height */
-    
-    /* Adding linear gradient-like box shadow */
+    position: relative; /* Sets the container as the reference point for absolute positioning */
     box-shadow: 10px 10px 15px #a871c182, -10px -10px 15px #567a6c8c; /* Simulates a gradient shadow */
+}
+
+/* Paging element styling */
+.paging {
+    background-color: #00000038; /* Sets the background color to black */
+    width: 100%; /* Makes the element span the full width of the container */
+    height: 80px; /* Sets the height of the paging element */
+    position: absolute; /* Positions it at the bottom of the container */
+    bottom: 0; /* Places it at the bottom of the container */
+    left: 0; /* Aligns it to the left edge */
+    padding: 20px;
+    
+
+}
+
+.next{
+
+}
+.next{
+float: right;
+
 }
