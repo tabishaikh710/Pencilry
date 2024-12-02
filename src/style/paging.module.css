@@ -1,0 +1,14 @@
+.container {
+    min-height: 90vh; /* Ensures the container spans the full height of the viewport */
+    width: 90%; /* Ensures the container spans the full width of the viewport */
+    display: flex; /* Enables Flexbox layout */
+    justify-content: center; /* Centers content horizontally (X-axis) */
+    align-items: center; /* Centers content vertically (Y-axis) */
+    margin: auto; /* Ensures there's no extra margin on the container */
+    box-sizing: border-box; /* Ensures padding and border are included in width/height */
+    
+    margin-top: 5vh; /* Adds a top margin of 5% viewport height */
+    
+    /* Adding linear gradient-like box shadow */
+    box-shadow: 10px 10px 15px #a871c182, -10px -10px 15px #567a6c8c; /* Simulates a gradient shadow */
+}

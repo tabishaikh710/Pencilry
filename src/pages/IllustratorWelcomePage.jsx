@@ -8,7 +8,7 @@ function IllustratorWelcomePage() {
    
     e.preventDefault();
     
-    navigate('/profile-completion');
+    navigate('/illustrator-question-form');
 
   }
        

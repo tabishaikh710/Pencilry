@@ -1,13 +1,12 @@
-import peging from '../components/globalComponents/pageing'
+import Paging from '../components/globalComponents/pageing';
 
-function illustratorQuestionForm() {
+function IllustratorQuestionForm() {
+  return (
+    <>
+      <Paging />
     
-
-return(
-  <paging/>
-)
-
-
+    </>
+  );
 }
 
-export default illustratorQuestionForm;
+export default IllustratorQuestionForm;
