@@ -9,9 +9,6 @@ function paging() {
     <div className={style.paging}>
     <button className={style.prev}>Prev</button>
     <button className={style.next} >Next</button>
-    
-
-
     </div>
 
 </div>

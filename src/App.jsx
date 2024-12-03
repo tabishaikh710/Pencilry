@@ -29,7 +29,8 @@ function App() {
         <Route path="/profile-completion" element={<ProfileCompletionPage />} />
         <Route path="/client-welcome" element={<ClientWelcomePage />} />
         <Route path="/illustrator-welcome" element={<IllustratorWelcomePage />} />
-        <Route path="/illustrator-welcome/IllustratorQuesForm" element={<IllustratorQuestionForm />} />
+        <Route path="/illustrator-question-form" element={<IllustratorQuestionForm />} />
+
 
         
         {/* Add other routes as needed */}
