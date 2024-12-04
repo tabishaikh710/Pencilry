@@ -1,32 +1,50 @@
 import { useState } from "react";
-import QuesOne from '../IllustratoSurvey/QuesOne'
-import  style  from "../../style/paging.module.css";
+import RendercontentforSform from "../IllustratoSurvey/RendercontentforSform";
+import style from "../../style/paging.module.css";
 
+function Paging() {
+  const [currentTab, setCurrentTab] = useState(1); // Start at the first tab
+  const totalPages = 5;
 
-// const [currentTab, setCurrentTab]=useState("")
+  const validation = () => {
+    // Add your validation logic here
+    return true; // Default to true for now
+  };
 
+  const handleNextPage = () => {
+    if (currentTab < totalPages && validation()) {
+      setCurrentTab((prevTab) => prevTab + 1);
+    }
+  };
 
+  const handlePrevPage = () => {
+    if (currentTab > 1) {
+      setCurrentTab((prevTab) => prevTab - 1);
+    }
+  };
 
-function paging() {
-   
-    return(
-<>
+  return (
+    <div className={style.container}>
+      <RendercontentforSform currentTab={currentTab} />
 
-
-<div className={style.container}>
-    
-<QuesOne/>
-
-
-    <div className={style.paging}>
-    <button className={style.prev}>Prev</button>
-    <button className={style.next} >Next</button>
+      <div className={style.paging}>
+        <button
+          onClick={handlePrevPage}
+          className={style.prev}
+          disabled={currentTab === 1} // Disable at the first tab
+        >
+          Prev
+        </button>
+        <button
+          onClick={handleNextPage}
+          className={style.next}
+          disabled={currentTab === totalPages} // Disable at the last tab
+        >
+          Next
+        </button>
+      </div>
     </div>
-
-</div>
-
-</>
-       
-    )
+  );
 }
-export default paging;
+
+export default Paging;
