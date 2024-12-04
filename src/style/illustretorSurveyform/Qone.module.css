@@ -1,0 +1,28 @@
+.container{
+   display: flex;
+   justify-content: space-evenly;
+
+}
+
+.optionSection input{
+
+    position: relative;
+    left: 90%;
+    bottom: 70%;
+}
+
+.repIcon {
+    
+    color: #567a6c;
+    font-size: 50px;
+        
+
+}
+
+
+.optionSection{
+    background-color: #b6b3b361;
+    width: 30%;
+    padding: 5px;
+    
+}
