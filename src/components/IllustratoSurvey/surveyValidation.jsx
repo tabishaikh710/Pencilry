@@ -13,3 +13,15 @@ export const SurveyValidation = (currentTab) => {
       return true;
   }
 };
+
+export const handleSubmit = (e, currentTab, validation, contextValues) => {
+  e.preventDefault();
+
+  if (currentTab === 2 && validation) {
+    console.log("Form Submitted Successfully:");
+    console.log("Context Values:", contextValues);
+  } else {
+    console.log("Form submission failed due to validation errors.");
+  }
+};
+

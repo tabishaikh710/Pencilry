@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import RendercontentforSform from "../IllustratoSurvey/RendercontentforSform";
 import style from "../../style/paging.module.css";
-import { SurveyValidation } from "../IllustratoSurvey/surveyValidation";
-function Paging( {toPages , newButText}) {
+import { SurveyValidation, handleSubmit } from "../IllustratoSurvey/surveyValidation";
+import { AuthContext } from "../IllustratoSurveyContext/IllustratoSurvey.context";
+
+function Paging({ toPages, newButText }) {
   const [currentTab, setCurrentTab] = useState(1); // Start at the first tab
   const totalPages = toPages;
-   
-  // const nwwButrender= () => {
-             
-  // }
-   
+  const contextValues = useContext(AuthContext); // Get context values
 
-  const validation = SurveyValidation(currentTab)
+  // Validate the current tab
+  const validation = SurveyValidation(currentTab, contextValues);
 
-  const handleNextPage = () => {
-    if (currentTab < totalPages && validation ) {
+  const handleNextPage = (e) => {
+    e.preventDefault();
+
+    if (currentTab < totalPages && validation) {
       setCurrentTab((prevTab) => prevTab + 1);
     }
   };
@@ -38,12 +39,17 @@ function Paging( {toPages , newButText}) {
           Prev
         </button>
         <button
-          onClick={handleNextPage}
+          onClick={(e) => {
+            if (currentTab === totalPages) {
+              handleSubmit(e, currentTab, validation, contextValues); // Call handleSubmit when on the last page
+            } else {
+              handleNextPage(e); // Navigate to the next page
+            }
+          }}
           className={style.next}
-          disabled={currentTab === totalPages} // Disable at the last tab
+          disabled={!validation} // Disable if validation fails
         >
-       
-       {currentTab === totalPages ? ` ${newButText}` : "Next"}
+          {currentTab === totalPages ? newButText : "Next"}
         </button>
       </div>
     </div>
