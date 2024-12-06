@@ -64,6 +64,7 @@ const PostAjob = () => {
     e.preventDefault();
 
     setCurrentTab(currentTab ==9)
+    console.log(formData)
 
    }
 
