@@ -1,18 +1,20 @@
 import { useState } from "react";
 import RendercontentforSform from "../IllustratoSurvey/RendercontentforSform";
 import style from "../../style/paging.module.css";
-
-function Paging() {
+import { SurveyValidation } from "../IllustratoSurvey/surveyValidation";
+function Paging( {toPages , newButText}) {
   const [currentTab, setCurrentTab] = useState(1); // Start at the first tab
-  const totalPages = 5;
+  const totalPages = toPages;
+   
+  // const nwwButrender= () => {
+             
+  // }
+   
 
-  const validation = () => {
-    // Add your validation logic here
-    return true; // Default to true for now
-  };
+  const validation = SurveyValidation(currentTab)
 
   const handleNextPage = () => {
-    if (currentTab < totalPages && validation()) {
+    if (currentTab < totalPages && validation ) {
       setCurrentTab((prevTab) => prevTab + 1);
     }
   };
@@ -40,7 +42,8 @@ function Paging() {
           className={style.next}
           disabled={currentTab === totalPages} // Disable at the last tab
         >
-          Next
+       
+       {currentTab === totalPages ? ` ${newButText}` : "Next"}
         </button>
       </div>
     </div>

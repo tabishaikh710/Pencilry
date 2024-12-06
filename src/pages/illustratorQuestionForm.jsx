@@ -1,9 +1,10 @@
 import Paging from '../components/globalComponents/pageing';
 
 function IllustratorQuestionForm() {
+  const newButText="Next Creat your profile";
   return (
     <>
-      <Paging />
+      <Paging toPages={2 } newButText={newButText} />
     
     </>
   );

@@ -1,6 +1,6 @@
 /* Container styling */
 .container {
-    min-height: 90vh; /* Ensures the container spans the full height of the viewport */
+    min-height: 550px; /* Ensures the container spans the full height of the viewport */
     width: 90%; /* Ensures the container spans the full width of the viewport */
     display: flex; /* Enables Flexbox layout */
     flex-direction: column; /* Stacks items vertically */

@@ -10,8 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ hasFreelancedBefore, setHasFreelancedBefore }}
-    >
+      value={{ hasFreelancedBefore, setHasFreelancedBefore , biggestGoal, setBiggestGoal }}>
       {children}
     </AuthContext.Provider>
   );
