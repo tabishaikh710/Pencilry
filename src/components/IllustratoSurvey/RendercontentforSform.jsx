@@ -17,18 +17,7 @@ function RendercontentforSform({currentTab}) {
                 return(
                     <QuesTwo/>
                 )
-                case 3:
-                    return(
-                        <QuesThree/>
-                    )
-                    case 4:
-                        return(
-                            <QuesFour/>
-                        )
-                        case 5:
-                            return(
-                                <QuesFive/>
-                            )
+              
            
             
            

@@ -1,6 +1,7 @@
 .container{
    display: flex;
-   justify-content: space-evenly;
+   justify-content:space-evenly;
+   flex-wrap: wrap;
 
 }
 
@@ -22,7 +23,10 @@
 
 .optionSection{
     background-color: #b6b3b361;
-    width: 30%;
+    width: 300px;
     padding: 5px;
+    margin: 10px 0px;
+
+    
     
 }
