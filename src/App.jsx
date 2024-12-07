@@ -10,6 +10,7 @@ import ProfileCompletionPage from '../src/pages/ProfileCompletionPage';
 import ClientWelcomePage from './pages/ClientWelcomePage';
 import IllustratorWelcomePage from './pages/IllustratorWelcomePage';
 import IllustratorQuestionForm from './pages/illustratorQuestionForm';
+import CreateIllustratorProfile from './pages/createIllustratorProfile';
 import './style/headings.css'
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
         <Route path="/client-welcome" element={<ClientWelcomePage />} />
         <Route path="/illustrator-welcome" element={<IllustratorWelcomePage />} />
         <Route path="/illustrator-question-form" element={<IllustratorQuestionForm />} />
-
+        <Route path="/Create-illustrator-profile" element={<CreateIllustratorProfile />} />
 
         
         {/* Add other routes as needed */}

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../IllustratoSurveyContext/IllustratoSurvey.context";
 
+
 export const SurveyValidation = (currentTab) => {
   const { hasFreelancedBefore, biggestGoal } = useContext(AuthContext);
 
@@ -24,4 +25,9 @@ export const handleSubmit = (e, currentTab, validation, contextValues) => {
     console.log("Form submission failed due to validation errors.");
   }
 };
+
+
+export  const routeToCreatYourProfile=(navigate)=>{
+  navigate('/Create-illustrator-profile');
+} 
 

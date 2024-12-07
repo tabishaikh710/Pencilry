@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import RendercontentforSform from "../IllustratoSurvey/RendercontentforSform";
 import style from "../../style/paging.module.css";
-import { SurveyValidation, handleSubmit } from "../IllustratoSurvey/surveyValidation";
+import { useNavigate } from "react-router-dom";
+import { SurveyValidation, handleSubmit ,routeToCreatYourProfile } from "../IllustratoSurvey/surveyValidation";
 import { AuthContext } from "../IllustratoSurveyContext/IllustratoSurvey.context";
 
 function Paging({ toPages, newButText }) {
@@ -25,7 +26,7 @@ function Paging({ toPages, newButText }) {
       setCurrentTab((prevTab) => prevTab - 1);
     }
   };
-
+  const navigate = useNavigate();
   return (
     <div className={style.container}>
       <RendercontentforSform currentTab={currentTab} />
@@ -42,6 +43,8 @@ function Paging({ toPages, newButText }) {
           onClick={(e) => {
             if (currentTab === totalPages) {
               handleSubmit(e, currentTab, validation, contextValues); // Call handleSubmit when on the last page
+              routeToCreatYourProfile(navigate);
+              
             } else {
               handleNextPage(e); // Navigate to the next page
             }
