@@ -1,22 +1,15 @@
-import { useState, useContext } from "react";
-import RendercontentforSform from "../IllustratoSurvey/RendercontentforSform";
-import style from "../../style/paging.module.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SurveyValidation, handleSubmit ,routeToCreatYourProfile } from "../IllustratoSurvey/surveyValidation";
-import { AuthContext } from "../IllustratoSurveyContext/IllustratoSurvey.context";
+import style from "../../style/paging.module.css";
 
-function Paging({ toPages, newButText }) {
-  const [currentTab, setCurrentTab] = useState(1); // Start at the first tab
-  const totalPages = toPages;
-  const contextValues = useContext(AuthContext); // Get context values
-
-  // Validate the current tab
-  const validation = SurveyValidation(currentTab, contextValues);
+function Paging({ totalPages, renderContent, validatePage, onSubmit, routeToCreateProfile, nextButtonText }) {
+  const [currentTab, setCurrentTab] = useState(1);
+  const navigate = useNavigate();
 
   const handleNextPage = (e) => {
     e.preventDefault();
 
-    if (currentTab < totalPages && validation) {
+    if (currentTab < totalPages && validatePage(currentTab)) {
       setCurrentTab((prevTab) => prevTab + 1);
     }
   };
@@ -26,34 +19,33 @@ function Paging({ toPages, newButText }) {
       setCurrentTab((prevTab) => prevTab - 1);
     }
   };
-  const navigate = useNavigate();
+
   return (
     <div className={style.container}>
-      <RendercontentforSform currentTab={currentTab} />
+      {renderContent(currentTab)}
 
       <div className={style.paging}>
         <button
           onClick={handlePrevPage}
           className={style.prev}
-          disabled={currentTab === 1} // Disable at the first tab
+          disabled={currentTab === 1}
         >
           Prev
         </button>
         <button
-          onClick={(e) => {
-            if (currentTab === totalPages) {
-              handleSubmit(e, currentTab, validation, contextValues); // Call handleSubmit when on the last page
-              routeToCreatYourProfile(navigate);
-              
-            } else {
-              handleNextPage(e); // Navigate to the next page
-            }
-          }}
-          className={style.next}
-          disabled={!validation} // Disable if validation fails
-        >
-          {currentTab === totalPages ? newButText : "Next"}
-        </button>
+  onClick={(e) => {
+    if (currentTab === totalPages) {
+      onSubmit(e); // Pass the event object to handleSubmit
+      routeToCreateProfile(navigate); // Navigate to the profile creation route
+    } else {
+      handleNextPage(e); // Navigate to the next page
+    }
+  }}
+  className={style.next}
+>
+  {currentTab === totalPages ? nextButtonText : "Next"}
+</button>
+
       </div>
     </div>
   );
