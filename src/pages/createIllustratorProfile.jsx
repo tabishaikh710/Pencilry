@@ -1,4 +1,4 @@
-import Pageing from "../components/globalComponents/pageing";
+import Info from "../components/illustratorProfileForm/info"
 
 function createillustratorProfile() {
 
@@ -8,7 +8,7 @@ function createillustratorProfile() {
     <br/>
     <br/>
 <h1>create your profile</h1>
-
+<Info/>
 
     </>
  )
