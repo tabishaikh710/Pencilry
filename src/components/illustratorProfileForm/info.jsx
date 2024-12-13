@@ -1,6 +1,10 @@
 import style from "../../style/illustretorProfilrForm/info.module.css"
+import { Button, Dropdown, Input, Page, setOptions } from '@mobiscroll/react';
 function Info(){
-
+  setOptions({
+    theme: 'ios',
+    themeVariant: 'dark'
+  });
 return(
     <>
     
@@ -11,8 +15,18 @@ return(
 
       <div  className={style.infoFormContaimer}>
        
-       <div className={style.item} id={style.imageContainer}></div>
-       <div className={style.item} id={style.FormContainer}></div>
+       <div className={style.item} id={style.imageContainer}>
+         <div className={style.showprofile}></div>
+
+        <div className={style.imageUpload}>
+        <input type="file" id="image" name="image" accept=".jpg," />
+
+        </div>
+        
+       </div>
+       <div className={style.item} id={style.FormContainer}>
+        
+       </div>
         
       </div>
 
