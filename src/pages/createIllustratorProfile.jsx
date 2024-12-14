@@ -1,4 +1,4 @@
-import Info from "../components/illustratorProfileForm/info"
+import SkillShow from "../components/illustratorProfileForm/SkillsShow"
 
 function createillustratorProfile() {
 
@@ -8,7 +8,7 @@ function createillustratorProfile() {
     <br/>
     <br/>
 <h1>create your profile</h1>
-<Info/>
+<SkillShow/> 
 
     </>
  )
