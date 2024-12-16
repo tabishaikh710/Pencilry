@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { AuthContext } from "../illustratorProfileForm/CreatProfileContextorm/profileform.context";
+import Style from "../../style/illustretorProfilrForm/addSkillForm.module.css";
 
 function SkillShow() {
-  const { formData, setFormData } = useContext(AuthContext); // Corrected context usage
+  const { formData, setFormData } = useContext(AuthContext);
 
   const popularSkills = [
     "Digital Painting (Photoshop, Procreate, Illustrator)",
@@ -30,7 +31,11 @@ function SkillShow() {
   // Handle adding a custom skill
   const handleAddCustomSkill = () => {
     if (search && !formData.skills.includes(search)) {
-      setFormData({ ...formData, skills: [...formData.skills, search], search: "" });
+      setFormData({
+        ...formData,
+        skills: [...formData.skills, search],
+        search: "",
+      });
     }
   };
 
@@ -39,6 +44,14 @@ function SkillShow() {
     if (!formData.skills.includes(skill)) {
       setFormData({ ...formData, skills: [...formData.skills, skill] });
     }
+  };
+
+  // Handle removing a skill
+  const handleSkillRemove = (skillToRemove) => {
+    setFormData({
+      ...formData,
+      skills: formData.skills.filter((skill) => skill !== skillToRemove),
+    });
   };
 
   return (
@@ -50,19 +63,19 @@ function SkillShow() {
         start typing to pick more. It’s up to you.
       </p>
 
-      <div className="skillShow">
+      <div className={Style.skillShow}>
         <input
           type="text"
           placeholder="Search for a skill..."
           value={search}
           onChange={handleSearchChange}
-          className="searchField" // Corrected class name
+          className={Style.searchField}
         />
-        <button onClick={handleAddCustomSkill} className="addSkillButton">
+        <button onClick={handleAddCustomSkill} className={Style.addSkillButton}>
           +
         </button>
 
-        <div className="skillSelect skillShowContainer">
+        <div className={`${Style.skillSelect} ${Style.skillShowContainer}`}>
           {popularSkills
             .filter((skill) =>
               skill.toLowerCase().includes(search.toLowerCase())
@@ -71,11 +84,26 @@ function SkillShow() {
               <button
                 key={index}
                 onClick={() => handleAddSkill(skill)}
-                className="skillButton"
+                className={Style.skillButton}
               >
                 {skill}
               </button>
             ))}
+        </div>
+
+        <div className={Style.skillsSelected}>
+          {formData.skills.map((skill, index) => (
+            <div key={index} className={Style.skillSelected}>
+              {skill}
+              <button
+                onClick={() => handleSkillRemove(skill)}
+                className={Style.removeButton}
+                aria-label={`Remove ${skill}`}
+              >
+                X
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     </>
