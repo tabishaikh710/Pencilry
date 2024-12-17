@@ -1,4 +1,4 @@
-import SkillShow from "../components/illustratorProfileForm/SkillsShow"
+import SkillShow from "../components/illustratorProfileForm/languagesSpeak"
 
 function createillustratorProfile() {
 
