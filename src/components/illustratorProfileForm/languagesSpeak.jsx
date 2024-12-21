@@ -72,10 +72,24 @@ function LanguagesSpeak() {
       </div>
     </div>
     <div className={Style.langSpeak}>
-    <div>
+    <div >
       <h2>Language Spoken</h2>
+       <ul>
+        <li>English</li>
+       </ul>
+    </div>
+    <div >
+      <h2>proficiencyLevels</h2>
+      <ul>
+        <li>Beginner</li>
+      </ul>
+
     </div>
     
+    <div >
+      <button type="button"> Remove Language</button>
+    </div>
+
     </div>
     </>
   );
