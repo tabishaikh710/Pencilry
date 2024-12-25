@@ -25,6 +25,7 @@ mySqlPool.query("SELECT 1")
 // Starting the server and making it listen on the defined port
 app.listen(port, () => {
     // Logging a message to indicate that the server is running
+    console.log('db connected');
     console.log(`Server is running on port ${port}`);
 });
 
