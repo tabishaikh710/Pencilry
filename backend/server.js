@@ -1,17 +1,26 @@
 // Importing the Express module
 const express = require('express');
-
+const PostAJobRouter = require('./routes/PostjobRoutes')
 const dotenv = require('dotenv');
 const mySqlPool = require('./config/db');
+// Creating an instance of the Express application
+const app = express();
+// Defining the port number on which the server will listen
+const port = process.env.Port;
+
+
+
 
 // Configuring dotenv to load environment variables from the .env file
 dotenv.config();
 
-// Creating an instance of the Express application
-const app = express();
+//midelwere
+app.use(express.json());
 
-// Defining the port number on which the server will listen
-const port = process.env.Port;
+
+app.use("/api/pj1/JobPost",PostAJobRouter);
+
+
 
 // Defining a route for the root URL ('/')
 app.get('/', (req, res) => {
