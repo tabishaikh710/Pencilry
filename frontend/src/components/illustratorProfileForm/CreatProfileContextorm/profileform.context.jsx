@@ -9,6 +9,20 @@ export const ProfileForm = ({ children }) => {
     search: "", // Added default value for search
     LanguagesSpeak:[],
     LangLavel:[],
+    school: "",
+        degree: "",
+        fieldOfStudy: "",
+      startYear: "",
+       endYear: "",
+     description: "",
+     Wtitle: "",
+    wcompany: "",
+    wlocation: "",
+    wcountry: "",
+    wstartDateMonth: "February",
+    wstartDateYear: "2021",
+    wisCurrent: true,
+    wdescription: "",
   });
 
   return (

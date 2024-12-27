@@ -1,0 +1,34 @@
+.date-dropdown-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 20px auto;
+  }
+  
+  .date-label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .dropdown-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .dropdown {
+    width: 100px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .dropdown:focus {
+    outline: none;
+    border-color: #666;
+  }
+  
