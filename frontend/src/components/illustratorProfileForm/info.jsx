@@ -1,6 +1,45 @@
 import style from "../../style/illustretorProfilrForm/info.module.css";
+import React, { useContext } from "react";
+import { AuthContext } from "../illustratorProfileForm/CreatProfileContextorm/profileform.context";
 
 function Info() {
+  // State for form fields
+  const [formData, setFormData] = useState({
+    dob: "",
+    country: "Pakistan",
+    street: "",
+    apt: "",
+    city: "",
+    state: "",
+    zip: "",
+    countryCode: "+92",
+    phone: "",
+  });
+
+  // State for image upload
+  const [profileImage, setProfileImage] = useState(null);
+
+  // Handle form field changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // Handle image upload
+  const handleImageUpload = (e) => {
+    setProfileImage(e.target.files[0]);
+  };
+
+  // Example of form submission (if needed)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form data:", formData);
+    console.log("Uploaded image:", profileImage);
+  };
+
   return (
     <>
       <h1>A few last details, then you can check and publish your profile.</h1>
@@ -8,7 +47,15 @@ function Info() {
       <div className={style.infoFormContaimer}>
         {/* Image Upload Section */}
         <div className={style.item} id={style.imageContainer}>
-          <div className={style.showprofile}></div>
+          <div className={style.showprofile}>
+            {profileImage && (
+              <img
+                src={URL.createObjectURL(profileImage)}
+                alt="Profile Preview"
+                className={style.previewImage}
+              />
+            )}
+          </div>
 
           <div className={style.imageUpload}>
             <input
@@ -17,13 +64,14 @@ function Info() {
               name="image"
               accept="image/*"
               className={style.inputFile}
+              onChange={handleImageUpload}
             />
           </div>
         </div>
 
         {/* Form Section */}
         <div className={style.item} id={style.FormContainer}>
-          <form>
+          <form onSubmit={handleSubmit}>
             {/* Date of Birth */}
             <label htmlFor="dob" className={style.label}>
               Date of Birth *
@@ -33,6 +81,8 @@ function Info() {
               id="dob"
               name="dob"
               className={style.input}
+              value={formData.dob}
+              onChange={handleInputChange}
               required
             />
             <span className={style.error}>Date is required</span>
@@ -45,11 +95,11 @@ function Info() {
               id="country"
               name="country"
               className={style.select}
+              value={formData.country}
+              onChange={handleInputChange}
               required
             >
-              <option value="Pakistan" selected>
-                Pakistan
-              </option>
+              <option value="Pakistan">Pakistan</option>
               <option value="USA">USA</option>
               <option value="India">India</option>
               <option value="UK">UK</option>
@@ -65,6 +115,8 @@ function Info() {
               name="street"
               placeholder="Enter street address"
               className={style.input}
+              value={formData.street}
+              onChange={handleInputChange}
               required
             />
 
@@ -78,6 +130,8 @@ function Info() {
               name="apt"
               placeholder="Apt/Suite (Optional)"
               className={style.input}
+              value={formData.apt}
+              onChange={handleInputChange}
             />
 
             {/* City, State, ZIP/Postal Code */}
@@ -92,6 +146,8 @@ function Info() {
                   name="city"
                   placeholder="Enter city"
                   className={style.input}
+                  value={formData.city}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -105,6 +161,8 @@ function Info() {
                   name="state"
                   placeholder="Enter state/province"
                   className={style.input}
+                  value={formData.state}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className={style.column}>
@@ -117,6 +175,8 @@ function Info() {
                   name="zip"
                   placeholder="Enter ZIP/Postal code"
                   className={style.input}
+                  value={formData.zip}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -130,6 +190,8 @@ function Info() {
                 id="countryCode"
                 name="countryCode"
                 className={style.select}
+                value={formData.countryCode}
+                onChange={handleInputChange}
               >
                 <option value="+92">+92</option>
                 <option value="+1">+1</option>
@@ -141,6 +203,8 @@ function Info() {
                 name="phone"
                 placeholder="Enter number"
                 className={style.input}
+                value={formData.phone}
+                onChange={handleInputChange}
                 required
               />
             </div>

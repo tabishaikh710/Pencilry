@@ -23,6 +23,9 @@ export const ProfileForm = ({ children }) => {
     wstartDateYear: "2021",
     wisCurrent: true,
     wdescription: "",
+    bio:"", 
+    selectedCategories:[],
+    
   });
 
   return (

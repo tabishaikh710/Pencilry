@@ -1,4 +1,4 @@
-import SkillShow from "../components/illustratorProfileForm/WorkExperience"
+import SkillShow from "../components/illustratorProfileForm/KindOfWork"
 
 function createillustratorProfile() {
 
