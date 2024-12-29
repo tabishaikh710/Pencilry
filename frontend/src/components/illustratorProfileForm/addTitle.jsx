@@ -1,7 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../illustratorProfileForm/CreatProfileContextorm/profileform.context";
+
 
 const AddTitle = () => {
-  const [title, setTitle] = useState("Design");
+  const { formData, setFormData } = useContext(AuthContext);
+
+  // Handle input change
+  const handleInputChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      main_Title: e.target.value,
+    }));
+  };
+
+  // Clear input field
+  const handleClearInput = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      main_Title: "",
+    }));
+  };
 
   const styles = {
     container: {
@@ -55,7 +73,7 @@ const AddTitle = () => {
 
   return (
     <div style={styles.container}>
-      <div style={styles.stepCounter}>4/10</div>
+
       <h2 style={styles.heading}>
         Got it. Now, add a title to tell the world what you do.
       </h2>
@@ -70,14 +88,14 @@ const AddTitle = () => {
         <input
           id="titleInput"
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={formData.main_Title || ""}
+          onChange={handleInputChange}
           placeholder="Enter your professional role"
           style={styles.input}
         />
-        {title && (
+        {formData.main_Title && (
           <button
-            onClick={() => setTitle("")}
+            onClick={handleClearInput}
             style={styles.clearButton}
             aria-label="Clear input"
           >
