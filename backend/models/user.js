@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Client Schema Definition
-const clientSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Name is required'],
@@ -47,4 +47,4 @@ const clientSchema = new mongoose.Schema({
 // });
 
 // Export the Client model
-module.exports = mongoose.model('Client', clientSchema);
+module.exports = mongoose.model('User', UserSchema);

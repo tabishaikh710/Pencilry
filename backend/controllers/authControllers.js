@@ -1,4 +1,4 @@
-const Client = require('../models/client');
+const User = require('../models/user'); // Renamed for clarity and convention
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 
@@ -17,7 +17,7 @@ const registerUserClient = async (req, res) => {
         const { name, email, password } = req.body;
 
         // Check if email already exists
-        const existingUser = await Client.findOne({ email });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(409).json({
                 success: false,
@@ -30,21 +30,22 @@ const registerUserClient = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         // Create a new user instance
-        const newClient = new Client({
+        const newUser = new User({
             name,
             email,
             password: hashedPassword,
         });
 
         // Save user to the database
-        const savedClient = await newClient.save();
+        const savedUser = await newUser.save();
 
         return res.status(201).json({
             success: true,
             msg: 'User created successfully',
-            data: savedClient,
+            data: savedUser,
         });
     } catch (error) {
+        console.error(`Error registering user: ${error.message}`); // Log error
         return res.status(500).json({
             success: false,
             msg: 'Internal server error',

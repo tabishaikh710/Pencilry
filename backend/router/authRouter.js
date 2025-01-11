@@ -4,6 +4,6 @@ const authController = require('../controllers/authControllers');
 const { registerValidator } = require('../helpers/validation');
 
 // Define the register route
-router.post('/clientRegister', registerValidator, authController.registerUserClient);
+router.post('/Register', registerValidator, authController.registerUserClient);
 
 module.exports = router;
