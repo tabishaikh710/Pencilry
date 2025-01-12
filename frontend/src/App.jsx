@@ -33,8 +33,8 @@ function App() {
         <Route path="/illustrator-welcome" element={<IllustratorWelcomePage />} />
         <Route path="/illustrator-question-form" element={<IllustratorQuestionForm />} />
         <Route path="/Create-illustrator-profile" element={<CreateIllustratorProfile />} />
-        <Route path="/JobsPages" element={<Jobpage />} /> 
-        
+        <Route path="/jobs-pages" element={<Jobpage />} />
+
         {/* Add other routes as needed */}
       </Routes>
     </Router>

@@ -22,5 +22,5 @@ export const handleSubmit = (e, contextValues) => {
 
 
   export const routeToCreatYourProfile = (navigate) => {
-    navigate("/JobsPages");
+    navigate("/jobs-pages");
   };
