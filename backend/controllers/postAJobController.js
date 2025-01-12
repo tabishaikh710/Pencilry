@@ -1,5 +1,5 @@
-const post= require('../models/jobpost');
-const { validationResult, body } = require('express-validator');
+const PostJob= require('../models/jobpost');
+const { validationResult} = require('express-validator');
 
 const postJobController= async (req,res )=>{
 
@@ -15,19 +15,24 @@ const postJobController= async (req,res )=>{
             });
         }
 
-        const { title, description, location, company, category, skills, experience, jobType } = req.body;
+        const { title, description, location, company, category, skills, experience, jobType, budget, experienceLevel, projectDuration, projectSize } = req.body;
+
 
         // Ensure you're using the correct model name and casing
         const newJob = new PostJob({
-          title,
-          description,
-          location,
-          company,
-          category,
-          skills,
-          experience,
-          jobType,
-        });
+            title,
+            description,
+            location,
+            company,
+            category,
+            skills,
+            experience,
+            jobType,
+            budget,
+            experienceLevel,
+            projectDuration,
+            projectSize,
+          });
 
 
         const savedJob = await newJob.save();

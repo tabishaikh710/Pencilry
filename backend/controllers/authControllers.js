@@ -1,5 +1,6 @@
 const User = require('../models/user'); // Renamed for clarity and convention
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const registerUserClient = async (req, res) => {
@@ -54,4 +55,78 @@ const registerUserClient = async (req, res) => {
     }
 };
 
-module.exports = { registerUserClient };
+
+// Generate Access Token
+const generateAccessToken = async (user) => {
+    const token = jwt.sign(user, process.env.ACCESS_SECRET_TOKEN, { expiresIn: '2h' });
+    return token;
+};
+
+// user login
+const userlogin= async(req, res)=>{
+
+    try {
+        
+const error= validationResult(req);
+
+if (!error.isEmpty) {
+    return res.status(404).json({
+        success: false,
+        msg: 'Invalid login request',
+        errors: errors.array(),
+        
+    })
+}
+      const { email, password } = req.body;
+
+      const userData = await User.findOne({ email });
+       
+      if (!userData) {
+        return res.status(404).json({
+            success: false,
+            msg: 'Email not found',
+        })
+      }
+
+     const isPasswordMatch= await bcrypt.compare(password, userData.password);
+
+     if (!isPasswordMatch) {
+        return res.status(404).json({
+            success: false,
+            msg: 'pasword and email no match',
+
+        })
+     }
+     const accessToken = await generateAccessToken({ id: userData._id, email: userData.email });
+   
+
+
+     return res.status(200).json({
+        success: true,
+        msg: "Login successful",
+        accessToken,
+        tokenType: "Bearer",
+        data: { id: userData._id, name: userData.name, email: userData.email },
+    });
+     
+
+      
+
+
+
+    } catch (error) {
+        
+     return res.status(500).json({
+        success: false,
+        msg: 'LOGIN Internal server error',
+        error: error.message,
+     })
+
+
+    }
+
+} 
+
+
+
+module.exports = { registerUserClient , userlogin };
