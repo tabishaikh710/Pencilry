@@ -1,7 +1,7 @@
 import JobCard from '../components/JobsCard';
 import image from "../assets/hero1.png";
 import JobFilter from "../components/jobspageComFolder/jobsearchFilter"; // Ensure the correct component name
-
+import Testworkxp from "../components/illustratorProfileForm/otherComponents/employmentCard" 
 function JobsPage() {
   const cardsData = [
     {
@@ -42,7 +42,11 @@ function JobsPage() {
             text={card.text}
             lastUpdated={card.lastUpdated}
           />
+
         ))}
+      </div>
+      <div>
+        <Testworkxp/>
       </div>
     </>
   );
