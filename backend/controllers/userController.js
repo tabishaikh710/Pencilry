@@ -1,11 +1,15 @@
 const User = require("../models/userModel")
 const bcrypt= require('bcrypt'); 
 
+const {validationResult}=require('express-validator')
+
 const userRegister = async (req, res) => {
 
 
 
 try {
+
+    validationResult(req);
 
 const {name , email , mobile, password} = req.body;
 
