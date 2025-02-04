@@ -46,7 +46,7 @@ const userData= await user.save();
 
 const msg=`<p>hii ${name}, please <a href="http://localhost:4000/mail-varification?id=${userData._id}">click here to varify</a> your email</p>`;
 
-mailer.sendMail(email,'mail varification', msg);
+mailer.sendMail(email,'mail-verification', msg);
 
 
 
@@ -69,6 +69,51 @@ return res.status(200).json({
 
 }
 
+const mailVerification =async(req, res)=>{
+
+try {
+
+    if (req.query.id==undefined) {
+        return res.ejs.render("404"); // 🔥 Add status(404)
+        
+    }
+
+    const userData= await User.findOne({_id: req.query.id});
+
+
+if (userData) {
+
+    await User.findByIdAndUpdate({_id: req.query.id}),{$set:{
+        is_verified:1
+    }}
+    
+} else {
+    return res.status(404).ejs.render("mail-verification", { message: "User not found!" });
+    
+}
+
+    
+} catch (error) {
+
+console.log(error.message);
+return res.ejs.render('404')
+
+    
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
 module.exports= {
     userRegister,
+    mailVerification
 }
