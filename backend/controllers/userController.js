@@ -44,7 +44,7 @@ const user = new User({
 
 const userData= await user.save();
 
-const msg=`<p>hii ${name}, please <a href="http://localhost:4000/mail-varification?id=${userData._id}">click here to varify</a> your email</p>`;
+const msg=`<p>hii ${name}, please <a href="http://localhost:4000/mail-verification?id=${userData._id}">click here to varify</a> your email</p>`;
 
 mailer.sendMail(email,'mail-verification', msg);
 
@@ -69,41 +69,53 @@ return res.status(200).json({
 
 }
 
-const mailVerification =async(req, res)=>{
+const mailVerification=async(req,res)=>{
 
-try {
+    try {
+const userID=req.query.id;
 
-    if (req.query.id==undefined) {
-        return res.ejs.render("404"); // 🔥 Add status(404)
-        
-    }
-
-    const userData= await User.findOne({_id: req.query.id});
-
-
-if (userData) {
-
-    await User.findByIdAndUpdate({_id: req.query.id}),{$set:{
-        is_verified:1
-    }}
+if (userID == undefined) {
+    return res.render('404');
     
+}
+
+const userdata= await User.findOne({_id:userID});
+
+
+if(userdata.is_verified==1){
+    return res.render('mail-verification', {message:'your mail already   verified ! '});
+
+}
+
+
+if (userdata) {
+
+    await User.findByIdAndUpdate({_id:userID},{
+        $set:{
+            is_verified:1
+        }
+    } 
+    );
+
+   
+    return res.render('mail-verification', {message:'mail has been verified successfully! '});
 } else {
-    return res.status(404).ejs.render("mail-verification", { message: "User not found!" });
+
+    return res.render('mail-verification', {message:'User not Found! '});
     
 }
-
     
-} catch (error) {
 
-console.log(error.message);
-return res.ejs.render('404')
 
+        
+    } catch (error) {
+       
+        console.log(error.message);
+        return  res.render('404');
+    }
     
-}
-
 
 }
-
 
 
 
@@ -116,4 +128,5 @@ return res.ejs.render('404')
 module.exports= {
     userRegister,
     mailVerification
+    
 }

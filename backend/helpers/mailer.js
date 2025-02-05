@@ -32,7 +32,7 @@ const sendMail = async (email, subject, content) => {
             }
            console.log('mail sent', info.messageId);
 
-
+         
 
 
         });
