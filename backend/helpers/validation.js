@@ -32,3 +32,9 @@ exports.registerValidator=[
 
 
 ];
+
+
+
+exports.sendmailVerificationValidator =[
+    check('email','please include a valid email').isEmail().normalizeEmail({gmail_remove_dots:true} ),
+]

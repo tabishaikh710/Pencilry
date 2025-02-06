@@ -117,7 +117,58 @@ if (userdata) {
 
 }
 
+const sendmailVerification =async(req, res)=>{
+    try {
+      const error =validationResult(req);
 
+      if (!error.isEmpty()) {
+        return res.status(400).json({
+            success:false,
+            mes:'Error',
+            error:error.array()
+        });
+        
+      }
+
+      const {email} = req.body;
+
+    const userData= await User.findOne({email:email});
+     
+    if(!userData){
+        return res.status(400).json({
+            success:false,
+            msg:"Email does't exists!",
+        })
+    }
+
+    if(userData.is_verified==1){
+        return res.status(400).json({
+            success:false,
+            msg :userData.email+"mail is already verified!",
+        })
+    }
+
+
+    const msg=`<p>hii ${userData.name}, please <a href="http://localhost:4000/mail-verification?id=${userData._id}">click here to varify</a> your email</p>`;
+
+    mailer.sendMail(userData.email,'mail-verification', msg);
+    
+    
+    
+    return res.status(200).json({
+        success:true,
+        msg:"Verification link sent to your mail, please check!",
+       
+    });
+
+        
+    } catch (error) {
+        return res.status(400).json({
+            success:false,
+            msg:error.message
+        });
+    }
+}
 
 
 
@@ -127,6 +178,7 @@ if (userdata) {
 
 module.exports= {
     userRegister,
-    mailVerification
+    mailVerification,
+    sendmailVerification
     
 }

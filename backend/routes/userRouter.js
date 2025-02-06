@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router(); // Fix the typo and use Router()
 const userController = require('../controllers/userController');
-const {registerValidator}=require('../helpers/validation');
+const {registerValidator, sendmailVerificationValidator}=require('../helpers/validation');
 router.use(express.json());
 
 const path = require('path');
@@ -39,7 +39,7 @@ const upload = multer({
 
 router.post('/register', upload.single('image'),registerValidator, userController.userRegister);
 
-
+router.post('/send-mail-verification',sendmailVerificationValidator,userController.sendmailVerification)
 
 
 
