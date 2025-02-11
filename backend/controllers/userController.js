@@ -148,7 +148,7 @@ const forgotPassword = async (req, res) => {
 
         const resetToken = randomString.generate();
         const msg = `<p>Hi ${userData.name}, please <a href="http://localhost:4000/reset-password?token=${resetToken}">click here</a> to reset your password</p>`;
-
+        await passwordReset.deleteMany({user_id:userData._id});
         const passwordResetEntry = new passwordReset({
             user_id: userData._id,
             token: resetToken
