@@ -174,9 +174,34 @@ const forgotPassword = async (req, res) => {
     }
 };
 
+
+const resetPassword= async(req,res)=>{
+    try {
+    if (req.query.token == undefined){
+        console.log('sssd')
+        return res.render('404');
+    }
+    
+    
+   const resetData=await passwordReset.findOne({token:req.query.token});
+
+
+   if(!resetData){
+    return res.render('404');
+    
+   }
+
+  return res.render('reset-password',{resetData});
+        
+    } catch (error) {
+        return res.render('404');
+    }
+} 
+
 module.exports = {
     userRegister,
     mailVerification,
     sendmailVerification,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 };
