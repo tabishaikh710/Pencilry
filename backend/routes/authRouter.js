@@ -13,6 +13,8 @@ router.use(bodyparser.urlencoded({extended:true}));
 router.get('/mail-verification',userController.mailVerification);
 
 router.get('/reset-password', userController.resetPassword)
+router.post('/reset-password', userController.updatePassword);
+router.get('/reset-success', userController.resetSuccess);
 
 
 
