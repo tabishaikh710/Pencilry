@@ -43,3 +43,13 @@ exports.passwordResetValidator = [
     .isEmail()
     .normalizeEmail({ gmail_remove_dots: true }),
 ];
+
+exports.loginValidator= [
+  check("email", "please include a valid email")
+    .isEmail()
+    .normalizeEmail({ gmail_remove_dots: true }),
+
+    check("password", "password is required").not().isEmpty(),
+]
+
+

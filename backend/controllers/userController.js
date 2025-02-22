@@ -4,7 +4,7 @@ const mailer = require('../helpers/mailer');
 const { validationResult } = require('express-validator');
 const randomString = require('randomstring');
 const passwordReset = require("../models/passwordReset");
-
+const jwt = require('jsonwebtoken');
 const userRegister = async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -178,7 +178,7 @@ const forgotPassword = async (req, res) => {
 const resetPassword= async(req,res)=>{
     try {
     if (req.query.token == undefined){
-        console.log('sssd')
+       
         return res.render('404');
     }
     
@@ -201,6 +201,7 @@ const resetPassword= async(req,res)=>{
 const updatePassword = async(req,res)=>{
 
 try {
+   
     
     const {user_id, password ,confirm_password} = req.body;
     const resetData = await passwordReset.findOne({user_id});
@@ -235,7 +236,61 @@ const resetSuccess =async (req,res)=>{
   }
 }
 
+const loginUser= async(req,res)=>{
+    try {
+     
 
+
+        const errors= validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success:false,
+                msg:'Errors',
+                errors:errors.array()
+            })
+        }
+       
+        const {email,password} = req.body;
+
+       const userData=await User.findOne({email});
+
+       if (!userData) {
+        return res.status(401).json({
+            success: false,
+            msg: "incorrect email or password",
+        });    
+        
+       }
+
+       const passwordMatch = await bcrypt.compare(password. userData.password )
+      
+       if (!passwordMatch) {
+        return res.status(401).json({
+            success: false,
+            msg: "incorrect email or password",
+        });  
+       }
+
+       if (userData.is_verified==0){
+        return res.status(401).json({
+            success: false,
+            msg: "please verify your account",
+        });  
+       }
+      
+       
+
+    }catch(error){
+
+
+return res.status(400).json({
+    success: false,
+    msg: error.message
+});    
+
+    }
+
+}
 
 module.exports = {
     userRegister,
@@ -244,5 +299,6 @@ module.exports = {
     forgotPassword,
     resetPassword,
     updatePassword,
-    resetSuccess
+    resetSuccess,
+    loginUser
 };
