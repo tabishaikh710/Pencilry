@@ -236,7 +236,7 @@ const resetSuccess =async (req,res)=>{
   }
 }
 const generateAccessToken = async (user) => {
-    const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "2h" });
+    const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "24h" });
     return token;
   };
   
@@ -303,6 +303,26 @@ const generateAccessToken = async (user) => {
   };
   
 
+
+  const usreProfile= async(req,res)=>{
+    try {
+        
+        return res.status(200).json({
+                   
+            msg:'tested'
+        })   
+
+    } catch (error) {
+        
+        return res.status(400).json({
+            success: false,
+            msg: error.message,
+          });
+
+
+    }
+  }
+
 module.exports = {
     userRegister,
     mailVerification,
@@ -311,5 +331,6 @@ module.exports = {
     resetPassword,
     updatePassword,
     resetSuccess,
-    loginUser
+    loginUser,
+    usreProfile
 };

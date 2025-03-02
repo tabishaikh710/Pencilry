@@ -6,7 +6,7 @@ router.use(express.json());
 
 const path = require('path');
 const multer = require('multer');
-
+const auth= require('../middleware/auth');  
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         if(file.mimetype==='image/jpeg'|| file.mimetype==='image/png'){
@@ -46,6 +46,9 @@ router.post('/forgot-password',passwordResetValidator,userController.forgotPassw
 router.post('/login',loginValidator,userController.loginUser );
 
 
+//authenticated routs
+
+router.get('/profile',auth,userController.usreProfile );
 
 
 
