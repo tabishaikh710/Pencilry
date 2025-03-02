@@ -306,10 +306,12 @@ const generateAccessToken = async (user) => {
 
   const usreProfile= async(req,res)=>{
     try {
+
+        
         
         return res.status(200).json({
                    
-            msg:'tested'
+            data: req.user
         })   
 
     } catch (error) {
