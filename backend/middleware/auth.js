@@ -12,7 +12,7 @@ const verifyToken = (req, res, next) => {
     }
     try {
         
-        const bearer= token.split(' ')
+        const bearer= token.split()
         const bearerToken = bearer[1]
        
         const decodedData = jwt.verify(bearerToken, config.SECRET_KEY)

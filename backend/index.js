@@ -20,7 +20,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/pencilry')
 
 // Middleware
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true })); // Parses URL-encoded data
 // Routes
 app.use('/api', userRoute);
 app.use('/', authRoute);

@@ -236,94 +236,104 @@ const resetSuccess =async (req,res)=>{
   }
 }
 const generateAccessToken = async (user) => {
-    const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "24h" });
-    return token;
-  };
-  
-  const loginUser = async (req, res) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          success: false,
-          msg: "Validation errors",
-          errors: errors.array(),
-        });
-      }
-  
-      const { email, password } = req.body;
-  
-      if (!email || !password) {
-        return res.status(400).json({
-          success: false,
-          msg: "Email and password are required!",
-        });
-      }
-  
-      const userData = await User.findOne({ email });
-  
-      if (!userData) {
-        return res.status(401).json({
-          success: false,
-          msg: "Incorrect email or password",
-        });
-      }
-  
-      const passwordMatch = await bcrypt.compare(password, userData.password);
-  
-      if (!passwordMatch) {
-        return res.status(401).json({
-          success: false,
-          msg: "Incorrect email or password",
-        });
-      }
-  
-      if (userData.is_verified === 0) {
-        return res.status(401).json({
-          success: false,
-          msg: "Please verify your account",
-        });
-      }
-  
-      const accessToken = await generateAccessToken({ user: userData });
-  
-      return res.status(200).json({
-        success: true,
-        msg: "Login successful!",
-        user: userData,
-        accessToken: accessToken,
-        tokenType: "Bearer",
-      });
-    } catch (error) {
-      return res.status(400).json({
-        success: false,
-        msg: error.message,
-      });
+    if (!process.env.SECRET_KEY) {
+        throw new Error("JWT SECRET_KEY is missing in environment variables");
     }
-  };
-  
+    
+    return jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "24h", algorithm: "HS256" });
+};
 
-
-  const usreProfile= async(req,res)=>{
+const loginUser = async (req, res) => {
     try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                msg: "Validation errors",
+                errors: errors.array(),
+            });
+        }
 
-        
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                msg: "Email and password are required!",
+            });
+        }
+
+        const userData = await User.findOne({ email });
+
+        if (!userData) {
+            return res.status(401).json({
+                success: false,
+                msg: "Incorrect email or password",
+            });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, userData.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({
+                success: false,
+                msg: "Incorrect email or password",
+            });
+        }
+
+        if (userData.is_verified === 0) {
+            return res.status(401).json({
+                success: false,
+                msg: "Please verify your account",
+            });
+        }
+
+        // Generate token with only required fields
+        const accessToken = await generateAccessToken({
+            _id: userData._id,
+            name: userData.name,
+            email: userData.email,
+            is_verified: userData.is_verified
+        });
+
+        return res.status(200).json({
+            success: true,
+            msg: "Login successful!",
+            user: {
+                _id: userData._id,
+                name: userData.name,
+                email: userData.email,
+                is_verified: userData.is_verified,
+            },
+            accessToken: accessToken,
+            tokenType: "Bearer",
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            msg: error.message,
+        });
+    }
+};
+
+const usreProfile = async (req, res) => {
+    try {
         
         return res.status(200).json({
-                   
-            data: req.user
-        })   
+            msg:"tested"
+        })
+
 
     } catch (error) {
-        
         return res.status(400).json({
             success: false,
             msg: error.message,
           });
-
-
     }
-  }
+}
+
+ 
 
 module.exports = {
     userRegister,
@@ -335,4 +345,5 @@ module.exports = {
     resetSuccess,
     loginUser,
     usreProfile
+  
 };
