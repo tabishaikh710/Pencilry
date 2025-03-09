@@ -240,7 +240,8 @@ const generateAccessToken = async (user) => {
         throw new Error("JWT SECRET_KEY is missing in environment variables");
     }
     
-    return jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "24h", algorithm: "HS256" });
+    const token= jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "24h" });
+    return token;
 };
 
 const loginUser = async (req, res) => {
@@ -290,21 +291,13 @@ const loginUser = async (req, res) => {
 
         // Generate token with only required fields
         const accessToken = await generateAccessToken({
-            _id: userData._id,
-            name: userData.name,
-            email: userData.email,
-            is_verified: userData.is_verified
+           user:userData
         });
 
         return res.status(200).json({
             success: true,
             msg: "Login successful!",
-            user: {
-                _id: userData._id,
-                name: userData.name,
-                email: userData.email,
-                is_verified: userData.is_verified,
-            },
+            user: userData,
             accessToken: accessToken,
             tokenType: "Bearer",
         });
@@ -317,11 +310,13 @@ const loginUser = async (req, res) => {
     }
 };
 
-const usreProfile = async (req, res) => {
+const userProfile = async (req, res) => {
     try {
-        
+        const userData = req.user.user 
         return res.status(200).json({
-            msg:"tested"
+            success: true,
+            msg: "User profile data",
+            data: userData
         })
 
 
@@ -344,6 +339,6 @@ module.exports = {
     updatePassword,
     resetSuccess,
     loginUser,
-    usreProfile
+    userProfile
   
 };
