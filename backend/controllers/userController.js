@@ -3,8 +3,11 @@ const bcrypt = require('bcrypt');
 const mailer = require('../helpers/mailer');
 const { validationResult } = require('express-validator');
 const randomString = require('randomstring');
+const fs = require("fs");
+const path = require("path");
 const passwordReset = require("../models/passwordReset");
 const jwt = require('jsonwebtoken');
+
 const userRegister = async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -343,35 +346,46 @@ const updateProfile = async (req, res) => {
         // Extract required fields
         const { name, mobile } = req.body;
 
-        // Construct update data
-        const data = { name, mobile };
-
-        if (req.file) {
-            data.image = `image/${req.file.filename}`;
-        }
-
-        // Update user profile
-        const userData = await User.findByIdAndUpdate(
-            req.user.user._id,  // Corrected syntax
-            { $set: data },
-            { new: true }
-        );
-
-        if (!userData) {
+        // Find the existing user
+        const existingUser = await User.findById(req.user.user._id);
+        if (!existingUser) {
             return res.status(404).json({
                 success: false,
                 msg: "User not found",
             });
         }
 
+        // Construct update data
+        const data = { name, mobile };
+
+        // Handle image update
+        if (req.file) {
+            // Delete the old image if it exists
+            if (existingUser.image) {
+                const oldImagePath = path.join(__dirname, "../public", existingUser.image);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                }
+            }
+            // Set new image path
+            data.image = `image/${req.file.filename}`;
+        }
+
+        // Update user profile
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user.user._id,
+            { $set: data },
+            { new: true }
+        );
+
         return res.status(200).json({
             success: true,
             msg: "User profile updated successfully",
-            user: userData,
+            user: updatedUser,
         });
 
     } catch (error) {
-        return res.status(500).json({  // Changed status code to 500 for server errors
+        return res.status(500).json({
             success: false,
             msg: "Internal server error",
             error: error.message,
