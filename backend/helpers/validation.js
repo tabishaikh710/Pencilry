@@ -53,3 +53,13 @@ exports.loginValidator= [
 ]
 
 
+exports.updateProfileValidator = [
+  check("name", "Name is required").not().isEmpty(),
+ 
+  check("mobile", "Modile no. is required").not().isEmpty(),
+
+  
+
+  
+];
+

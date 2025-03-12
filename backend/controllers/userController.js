@@ -328,7 +328,57 @@ const userProfile = async (req, res) => {
     }
 }
 
- 
+const updateProfile = async (req, res) => {
+    try {
+        // Validate request body
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                msg: "Validation error",
+                errors: errors.array(),
+            });
+        }
+
+        // Extract required fields
+        const { name, mobile } = req.body;
+
+        // Construct update data
+        const data = { name, mobile };
+
+        if (req.file) {
+            data.image = `image/${req.file.filename}`;
+        }
+
+        // Update user profile
+        const userData = await User.findByIdAndUpdate(
+            req.user.user._id,  // Corrected syntax
+            { $set: data },
+            { new: true }
+        );
+
+        if (!userData) {
+            return res.status(404).json({
+                success: false,
+                msg: "User not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            msg: "User profile updated successfully",
+            user: userData,
+        });
+
+    } catch (error) {
+        return res.status(500).json({  // Changed status code to 500 for server errors
+            success: false,
+            msg: "Internal server error",
+            error: error.message,
+        });
+    }
+};
+
 
 module.exports = {
     userRegister,
@@ -339,6 +389,7 @@ module.exports = {
     updatePassword,
     resetSuccess,
     loginUser,
-    userProfile
+    userProfile,
+    updateProfile
   
 };
