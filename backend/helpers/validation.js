@@ -63,3 +63,18 @@ exports.updateProfileValidator = [
   
 ];
 
+
+exports.updateEmailleValidator = [
+  check("email")
+  .trim()
+  .notEmpty().withMessage("Email is required") // Ensures email is provided
+  .isEmail().withMessage("Invalid email format") // Validates email format
+  
+];
+
+
+
+
+
+
+

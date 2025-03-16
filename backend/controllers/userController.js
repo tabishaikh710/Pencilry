@@ -394,6 +394,70 @@ const updateProfile = async (req, res) => {
 };
 
 
+
+const updateEmail = async (req, res) => {
+    try {
+        // Validate request
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                msg: "Validation error",
+                errors: errors.array(),
+            });
+        }
+
+        // Extract required fields
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                msg: "Email is required",
+            });
+        }
+
+        // Check if the email is already in use
+        const emailExists = await User.findOne({ email });
+        if (emailExists) {
+            return res.status(400).json({
+                success: false,
+                msg: "This email is already in use",
+            });
+        }
+
+        // Find the existing user
+        const existingUser = await User.findById(req.user.user._id);
+        if (!existingUser) {
+            return res.status(404).json({
+                success: false,
+                msg: "User not found",
+            });
+        }
+
+        // Update email
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user.user._id,
+            { $set: { email, is_verified: 0 } }, // Reset verification
+            { new: true }
+        );
+
+        return res.status(200).json({
+            success: true,
+            msg: "User email updated successfully. Please verify your new email.",
+            user: updatedUser,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            msg: "Internal server error",
+            error: error.message,
+        });
+    }
+};
+
+
 module.exports = {
     userRegister,
     mailVerification,
@@ -404,6 +468,7 @@ module.exports = {
     resetSuccess,
     loginUser,
     userProfile,
-    updateProfile
+    updateProfile,
+    updateEmail
   
 };
