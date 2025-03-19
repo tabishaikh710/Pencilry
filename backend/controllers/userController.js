@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const bcrypt = require('bcrypt'); 
 const mailer = require('../helpers/mailer');
+const {deleteFile} = require('../helpers/deleteFile');
 const { validationResult } = require('express-validator');
 const randomString = require('randomstring');
 const fs = require("fs").promises;
@@ -357,23 +358,21 @@ const updateProfile = async (req, res) => {
 
         // Construct update data
         const data = { name, mobile };
-
+       const user_id= req.user.user._id
         // Handle image update
-        if (req.file) {
-            // Delete the old image if it exists
-            if (existingUser.image) {
-                const oldImagePath = path.join(__dirname, "../public", existingUser.image);
-                if (fs.existsSync(oldImagePath)) {
-                    fs.unlinkSync(oldImagePath);
-                }
-            }
-            // Set new image path
-            data.image = `image/${req.file.filename}`;
+        if (req.file !== undefined) {
+            data.image = 'images/'+req.file.filename;
+            const olduser = await User.findOne({_id:user_id});
+           const oldFilePath= path.join(__dirname,'../public/'+olduser.image)
+
+           deleteFile(oldFilePath)
         }
+
+
 
         // Update user profile
         const updatedUser = await User.findByIdAndUpdate(
-            req.user.user._id,
+            user_id,
             { $set: data },
             { new: true }
         );
