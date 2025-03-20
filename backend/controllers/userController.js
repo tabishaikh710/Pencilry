@@ -244,7 +244,16 @@ const generateAccessToken = async (user) => {
         throw new Error("JWT SECRET_KEY is missing in environment variables");
     }
     
-    const token= jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "24h" });
+    const token= jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "4h" });
+    return token;
+};
+
+const generateRefreshToken = async (user) => {
+    if (!process.env.SECRET_KEY) {
+        throw new Error("JWT SECRET_KEY is missing in environment variables");
+    }
+    
+    const token= jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "6h" });
     return token;
 };
 
@@ -298,11 +307,18 @@ const loginUser = async (req, res) => {
            user:userData
         });
 
+        const refreshToken = await generateRefreshToken({
+            user:userData
+         });
+
+        
+
         return res.status(200).json({
             success: true,
             msg: "Login successful!",
             user: userData,
             accessToken: accessToken,
+            refreshToken: refreshToken,
             tokenType: "Bearer",
         });
 
@@ -457,6 +473,36 @@ const updateEmail = async (req, res) => {
 };
 
 
+const refreshToken = async (req, res) => {
+
+    try {
+
+        const userId = req.user.user._id;
+        const userData = await user.findOne({_id:userId})
+
+        const accessToken= await generateAccessToken({user:userData});
+        const refreshToken = await generateRefreshToken({user:userData});
+
+
+
+        return res.status(200).json({
+            success: true,
+            msg:'Token refreshed!',
+            accessToken:accessToken,
+            refreshToken:refreshToken
+        })
+
+    } catch (error) {
+
+        return res.status(400).json({
+            success: false,
+            msg: error.message,
+        })
+        
+    }
+
+}
+
 module.exports = {
     userRegister,
     mailVerification,
@@ -468,6 +514,7 @@ module.exports = {
     loginUser,
     userProfile,
     updateProfile,
-    updateEmail
+    updateEmail,
+    refreshToken
   
 };
