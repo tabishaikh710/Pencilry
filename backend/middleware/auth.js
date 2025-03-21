@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken");
+const Blacklist=require('../models/blacklist');
 
 const verifyToken = async (req, res, next) => {
     console.log("Headers received:", req.headers); // Debugging all headers
 
-    const token = req.headers.authorization || req.headers.Authorization;
+    const token = req.headers.authorization || req.headers.Authorization || req.body.token || req.query.token ;
     console.log("Extracted Token:", token); // Debugging token extraction
 
     if (!token) {
@@ -25,6 +26,19 @@ const verifyToken = async (req, res, next) => {
         }
 
         const bearerToken = bearer[1];
+
+      const blacklistedToken= await  Blacklist.findOne({token:bearerToken});
+
+      if(blacklistedToken){
+        
+        return res.status(404).json({
+            success: false,
+            msg:'this session has been expired, please login again'
+        });
+
+      }
+
+
         const decodedData = jwt.verify(bearerToken, process.env.SECRET_KEY);
 
         console.log("Decoded Token:", decodedData); // Debugging decoded token

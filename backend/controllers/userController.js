@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const mailer = require('../helpers/mailer');
 const {deleteFile} = require('../helpers/deleteFile');
 const { validationResult } = require('express-validator');
+const Blacklist=require('../models/blacklist')
 const randomString = require('randomstring');
 const fs = require("fs").promises;
 const path = require("path");
@@ -503,6 +504,49 @@ const refreshToken = async (req, res) => {
 
 }
 
+const logout = async (req, res) => {
+
+try {
+
+    const token = req.headers.authorization || req.headers.Authorization || req.body.token || req.query.token ;
+
+
+    const bearer = token.split(" ");
+    if (bearer.length !== 2 || bearer[0] !== "Bearer") {
+        console.log("Invalid token format:", token);
+        return res.status(403).json({
+            success: false,
+            message: "Invalid token format",
+        });
+    }
+
+    const bearerToken = bearer[1];
+
+
+    const newBlacklist= new Blacklist({
+        token: bearerToken
+    });
+    await newBlacklist.save();
+
+   res.setHeader('Clear-Site-Data' , '"cookies", "storage"');
+
+    return res.status(200).json({
+        success: true,
+        msg:'logged out'
+
+    })
+    
+} catch (error) {
+    return res.status(400).json({
+        success: false,
+        msg:error.message
+    })
+    
+}
+
+
+}
+
 module.exports = {
     userRegister,
     mailVerification,
@@ -515,6 +559,7 @@ module.exports = {
     userProfile,
     updateProfile,
     updateEmail,
-    refreshToken
+    refreshToken,
+    logout
   
 };
