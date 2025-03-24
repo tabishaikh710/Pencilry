@@ -31,7 +31,7 @@ const verifyToken = async (req, res, next) => {
 
       if(blacklistedToken){
         
-        return res.status(404).json({
+        return res.status(400).json({
             success: false,
             msg:'this session has been expired, please login again'
         });
