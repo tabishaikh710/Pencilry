@@ -245,7 +245,7 @@ const generateAccessToken = async (user) => {
         throw new Error("JWT SECRET_KEY is missing in environment variables");
     }
     
-    const token= jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "4h" });
+    const token= jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "60s" });
     return token;
 };
 
@@ -479,7 +479,7 @@ const refreshToken = async (req, res) => {
     try {
 
         const userId = req.user.user._id;
-        const userData = await user.findOne({_id:userId})
+        const userData = await User.findOne({_id:userId})
 
         const accessToken= await generateAccessToken({user:userData});
         const refreshToken = await generateRefreshToken({user:userData});
