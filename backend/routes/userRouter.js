@@ -53,4 +53,5 @@ router.post('/update-profile', auth, upload.single('image'), updateProfileValida
 router.post('/update-Email' , auth ,updateEmailleValidator ,userController.updateEmail);
 router.get('/refresh-token' , auth  ,userController.refreshToken);
 router.get('/logout' , auth  ,userController.logout);
+
 module.exports = router;
