@@ -1,4 +1,4 @@
-import React from 'react';
+ 
 import '../style/LoginLink.css';
 
 const loginLink = () => {

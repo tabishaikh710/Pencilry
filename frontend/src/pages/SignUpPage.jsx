@@ -41,7 +41,7 @@ const SignUpPage = () => {
         />
       </div>
       <SignUpButton isDisabled={!selectedRole} onClick={handleCreateAccount} />
-      <LoginLink />
+      {/* <LoginLink /> */}
     </div>
   );
 };
