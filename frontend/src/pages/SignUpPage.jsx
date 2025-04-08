@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 import AccountOptionCard from '../components/AccountOptionCard';
 import SignUpButton from '../components/SignUpButton';
-import SignUpLink from '../components/LoginLink';
+import LoginLink from '../components/LoginLink';
 import '../style/SignUpPage.css';
 
 const SignUpPage = () => {
@@ -41,7 +41,7 @@ const SignUpPage = () => {
         />
       </div>
       <SignUpButton isDisabled={!selectedRole} onClick={handleCreateAccount} />
-      <SignUpLink />
+      <LoginLink />
     </div>
   );
 };
