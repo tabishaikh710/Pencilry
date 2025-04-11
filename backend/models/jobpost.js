@@ -5,13 +5,7 @@ const jobpostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-    validate: {
-      validator: async function(v) {
-        const user = await mongoose.model('User').findById(v);
-        return user !== null;
-      },
-      message: 'User not found'
-    }
+    
   },
   title: { 
     type: String, 
@@ -79,17 +73,12 @@ const jobpostSchema = new mongoose.Schema({
   attachments: {
     type: [String],
     default: [],
-    validate: [arrayOfUrlsValidator, 'Each attachment must be a valid URL']
+    
   },
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
-
-// URL validation for attachments
-function arrayOfUrlsValidator(value) {
-  return value.every(url => /^(http|https):\/\/[^ "]+$/.test(url)); // basic URL validation
-}
 
 module.exports = mongoose.model('Jobpost', jobpostSchema);

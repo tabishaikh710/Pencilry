@@ -7,7 +7,9 @@ router.use(express.json());
 
 const path = require('path');
 const multer = require('multer');
-const auth= require('../middleware/auth');  
+const auth= require('../middleware/auth');
+const Post= require('../middleware/post');
+  
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         if(file.mimetype==='image/jpeg'|| file.mimetype==='image/png'){
@@ -81,5 +83,5 @@ router.post('/update-profile', auth, upload.single('image'), updateProfileValida
 router.post('/update-Email' , auth ,updateEmailleValidator ,userController.updateEmail);
 router.get('/refresh-token' , auth  ,userController.refreshToken);
 router.get('/logout' , auth  ,userController.logout);
-router.post('/post_job', auth, jobDoc.single('attachments'), postControllers.postAjob);
+router.post('/post_job', Post, jobDoc.single('attachments'), postControllers.postAjob);
 module.exports = router;

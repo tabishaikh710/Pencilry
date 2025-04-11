@@ -240,23 +240,35 @@ const resetSuccess =async (req,res)=>{
     return res.render('404');
   }
 }
+
+
 const generateAccessToken = async (user) => {
     if (!process.env.SECRET_KEY) {
-        throw new Error("JWT SECRET_KEY is missing in environment variables");
+      throw new Error("JWT SECRET_KEY is missing in environment variables");
     }
-    
-    const token= jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "60s" });
-    return token;
-};
-
-const generateRefreshToken = async (user) => {
+  
+    const payload = {
+      id: user._id,
+    };
+  
+    console.log('Generated Access Token Payload:', payload); // Log the payload to check
+    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "1h" });
+  };
+  
+  const generateRefreshToken = async (user) => {
     if (!process.env.SECRET_KEY) {
-        throw new Error("JWT SECRET_KEY is missing in environment variables");
+      throw new Error("JWT SECRET_KEY is missing in environment variables");
     }
-    
-    const token= jwt.sign(user, process.env.SECRET_KEY, { expiresIn: "6h" });
-    return token;
-};
+  
+    const payload = {
+      id: user._id,
+    };
+  
+    console.log('Generated Refresh Token Payload:', payload); // Log the payload to check
+    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "6h" });
+  };
+  
+
 
 const loginUser = async (req, res) => {
     try {
@@ -303,15 +315,11 @@ const loginUser = async (req, res) => {
             });
         }
 
-        // Generate token with only required fields
-        const accessToken = await generateAccessToken({
-           user:userData
-        });
-
-        const refreshToken = await generateRefreshToken({
-            user:userData
-         });
-
+      
+        
+        // Generate token with the fetched user data
+        const accessToken = await generateAccessToken(userData._id);
+        const refreshToken = await generateRefreshToken(userData._id);
         
 
         return res.status(200).json({
