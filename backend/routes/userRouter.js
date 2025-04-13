@@ -76,6 +76,7 @@ router.post('/forgot-password',passwordResetValidator,userController.forgotPassw
 router.post('/login',loginValidator,userController.loginUser );
 
 
+
 //authenticated routs
 
 router.get('/profile',auth,userController.userProfile );

@@ -1,3 +1,4 @@
+const category = require("../models/category");
 const Jobpost = require("../models/jobpost");
 
 // Helper: Extract uploaded file paths
@@ -5,7 +6,16 @@ const extractFilePaths = (file) => {
   return file ? [`/jobdoc/${file.filename}`] : [];
 };
 
-exports.postAjob = async (req, res) => {
+
+category=async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+postAjob = async (req, res) => {
   try {
     const {
       title,
@@ -67,3 +77,8 @@ exports.postAjob = async (req, res) => {
   }
 };
 
+
+module.exports={
+  postAjob,
+category
+}
