@@ -1,4 +1,4 @@
-const category = require("../models/category");
+
 const Jobpost = require("../models/jobpost");
 
 // Helper: Extract uploaded file paths
