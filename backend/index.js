@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const userRoute = require('./routes/userRouter');
 const authRoute = require('./routes/authRouter');
 const category_route=require('./routes/categoryRouter');
+const subcategory_route=require('./routes/subCategoryRouter')
 const port = process.env.PORT || 4000; // Fix: Set a default port
 const app = express();
 
@@ -27,6 +28,8 @@ app.use('/', authRoute);
 
 // category_route
 app.use('/api',category_route);
+// subcategory_route
+app.use('/api',subcategory_route);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
