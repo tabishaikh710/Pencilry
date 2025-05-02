@@ -330,11 +330,10 @@ const generateAccessToken = async (user) => {
       });
     }
   };
-
   
 const userProfile = async (req, res) => {
     try {
-        const userId = req.user?.id;
+        const userId = req.user?._id;
 
         if (!userId) {
             return res.status(401).json({
@@ -383,7 +382,7 @@ const updateProfile = async (req, res) => {
         const { name, mobile } = req.body;
 
         // Find the existing user
-        const existingUser = await User.findById(req.user.user._id);
+        const existingUser = await User.findById(req.user._id); // ✅ Corrected
         if (!existingUser) {
             return res.status(404).json({
                 success: false,
@@ -393,17 +392,15 @@ const updateProfile = async (req, res) => {
 
         // Construct update data
         const data = { name, mobile };
-       const user_id= req.user.user._id
+        const user_id = req.user._id; // ✅ Corrected
+
         // Handle image update
         if (req.file !== undefined) {
-            data.image = 'images/'+req.file.filename;
-            const olduser = await User.findOne({_id:user_id});
-           const oldFilePath= path.join(__dirname,'../public/'+olduser.image)
-
-           deleteFile(oldFilePath)
+            data.image = 'images/' + req.file.filename;
+            const oldUser = await User.findOne({ _id: user_id });
+            const oldFilePath = path.join(__dirname, '../public/' + oldUser.image);
+            deleteFile(oldFilePath);
         }
-
-
 
         // Update user profile
         const updatedUser = await User.findByIdAndUpdate(
@@ -426,8 +423,6 @@ const updateProfile = async (req, res) => {
         });
     }
 };
-
-
 
 const updateEmail = async (req, res) => {
     try {

@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-const Blacklist=require('../models/blacklist');
+const Blacklist = require("../models/blacklist");
 
 const verifyToken = async (req, res, next) => {
-    console.log("Headers received:", req.headers); // Debugging all headers
+    console.log("Headers received:", req.headers);
 
-    const token = req.headers.authorization || req.headers.Authorization || req.body.token || req.query.token ;
-    console.log("Extracted Token:", token); // Debugging token extraction
+    const token = req.headers.authorization || req.headers.Authorization || req.body.token || req.query.token;
+    console.log("Extracted Token:", token);
 
     if (!token) {
         console.log("No token received");
@@ -27,22 +27,25 @@ const verifyToken = async (req, res, next) => {
 
         const bearerToken = bearer[1];
 
-      const blacklistedToken= await  Blacklist.findOne({token:bearerToken});
+        const blacklistedToken = await Blacklist.findOne({ token: bearerToken });
+        if (blacklistedToken) {
+            return res.status(401).json({
+                success: false,
+                msg: 'This session has expired. Please log in again.'
+            });
+        }
 
-      if(blacklistedToken){
-        
-        return res.status(400).json({
-            success: false,
-            msg:'this session has been expired, please login again'
-        });
-
-      }
-   
-
+        // Verify the token and decode its payload
         const decodedData = jwt.verify(bearerToken, process.env.SECRET_KEY);
+        console.log("Decoded Token:", decodedData);
 
-        console.log("Decoded Token:", decodedData); // Debugging decoded token
-        req.user = decodedData;
+        // Assign user data to req.user
+        req.user = {
+            _id: decodedData.id,    // Use decodedData.id (not decoded.id)
+            role: decodedData.role  // Use decodedData.role (not decoded.role)
+        };
+
+        next();
     } catch (error) {
         console.log("Token verification error:", error.message);
         return res.status(401).json({
@@ -50,8 +53,6 @@ const verifyToken = async (req, res, next) => {
             message: "Invalid token.",
         });
     }
-
-    return next();
 };
 
 module.exports = verifyToken;
