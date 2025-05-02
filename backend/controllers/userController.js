@@ -21,7 +21,7 @@ const userRegister = async (req, res) => {
             });
         }
 
-        const { name, email, mobile, password } = req.body;
+        const { name, email, mobile, password  } = req.body;
         const isExists = await User.findOne({ email });
 
         if (isExists) {
@@ -242,120 +242,130 @@ const resetSuccess =async (req,res)=>{
 }
 
 
+// Access Token Generator
 const generateAccessToken = async (user) => {
-    if (!process.env.SECRET_KEY) {
-      throw new Error("JWT SECRET_KEY is missing in environment variables");
-    }
-  
     const payload = {
       id: user._id,
+      role: user.role, // ✅ Now includes the role
     };
-  
-    console.log('Generated Access Token Payload:', payload); // Log the payload to check
     return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "1h" });
   };
   
+  // Refresh Token Generator
   const generateRefreshToken = async (user) => {
-    if (!process.env.SECRET_KEY) {
-      throw new Error("JWT SECRET_KEY is missing in environment variables");
-    }
-  
     const payload = {
       id: user._id,
+      role: user.role, // ✅ Include role here too
     };
-  
-    console.log('Generated Refresh Token Payload:', payload); // Log the payload to check
     return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "6h" });
   };
-  
 
 
-const loginUser = async (req, res) => {
+  const loginUser = async (req, res) => {
     try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                msg: "Validation errors",
-                errors: errors.array(),
-            });
-        }
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          success: false,
+          msg: "Validation errors",
+          errors: errors.array(),
+        });
+      }
+  
+      const { email, password } = req.body;
+  
+      if (!email || !password) {
+        return res.status(400).json({
+          success: false,
+          msg: "Email and password are required!",
+        });
+      }
+  
+      // Fetch user with password and role
+      const userData = await User.findOne({ email }).select("password role");
+  
+      if (!userData) {
+        return res.status(401).json({
+          success: false,
+          msg: "Incorrect email or password",
+        });
+      }
+  
+      const passwordMatch = await bcrypt.compare(password, userData.password);
+  
+      if (!passwordMatch) {
+        return res.status(401).json({
+          success: false,
+          msg: "Incorrect email or password",
+        });
+      }
+  
+      if (userData.is_verified === 0) {
+        return res.status(401).json({
+          success: false,
+          msg: "Please verify your account",
+        });
+      }
+  
+      // Generate tokens with FULL user data (includes role)
+      const accessToken = await generateAccessToken(userData);
+      const refreshToken = await generateRefreshToken(userData);
+  
+      return res.status(200).json({
+        success: true,
+        msg: "Login successful!",
+        user: {
+          _id: userData._id,
+          email: userData.email,
+          role: userData.role, // Explicitly include role in response
+        },
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        tokenType: "Bearer",
+      });
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        msg: error.message,
+      });
+    }
+  };
 
-        const { email, password } = req.body;
+  
+const userProfile = async (req, res) => {
+    try {
+        const userId = req.user?.id;
 
-        if (!email || !password) {
-            return res.status(400).json({
-                success: false,
-                msg: "Email and password are required!",
-            });
-        }
-
-        const userData = await User.findOne({ email });
-
-        if (!userData) {
+        if (!userId) {
             return res.status(401).json({
                 success: false,
-                msg: "Incorrect email or password",
+                msg: "Unauthorized access",
             });
         }
 
-        const passwordMatch = await bcrypt.compare(password, userData.password);
+        const user = await User.findById(userId).select("name email role mobile image");
 
-        if (!passwordMatch) {
-            return res.status(401).json({
+        if (!user) {
+            return res.status(404).json({
                 success: false,
-                msg: "Incorrect email or password",
+                msg: "User not found",
             });
         }
-
-        if (userData.is_verified === 0) {
-            return res.status(401).json({
-                success: false,
-                msg: "Please verify your account",
-            });
-        }
-
-      
-        
-        // Generate token with the fetched user data
-        const accessToken = await generateAccessToken(userData._id);
-        const refreshToken = await generateRefreshToken(userData._id);
-        
 
         return res.status(200).json({
             success: true,
-            msg: "Login successful!",
-            user: userData,
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-            tokenType: "Bearer",
+            msg: "User profile fetched successfully",
+            user,
         });
 
     } catch (error) {
-        return res.status(400).json({
+        return res.status(500).json({
             success: false,
-            msg: error.message,
+            msg: error.message || "Internal Server Error",
         });
     }
 };
 
-const userProfile = async (req, res) => {
-    try {
-        const userData = req.user.user 
-        return res.status(200).json({
-            success: true,
-            msg: "User profile data",
-            data: userData
-        })
-
-
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            msg: error.message,
-          });
-    }
-}
 
 const updateProfile = async (req, res) => {
     try {

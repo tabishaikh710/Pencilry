@@ -3,11 +3,13 @@ const router = express.Router(); // Fix the typo and use Router()
 const userController = require('../controllers/userController');
 const {registerValidator, sendmailVerificationValidator,passwordResetValidator, loginValidator, updateProfileValidator ,updateEmailleValidator}=require('../helpers/validation');
 const postControllers=require('../controllers/postControllers');
+
 router.use(express.json());
 
 const path = require('path');
 const multer = require('multer');
 const auth= require('../middleware/auth');
+const role= require('../middleware/role');
 const Post= require('../middleware/post');
   
 const storage = multer.diskStorage({
@@ -84,5 +86,5 @@ router.post('/update-profile', auth, upload.single('image'), updateProfileValida
 router.post('/update-Email' , auth ,updateEmailleValidator ,userController.updateEmail);
 router.get('/refresh-token' , auth  ,userController.refreshToken);
 router.get('/logout' , auth  ,userController.logout);
-router.post('/post_job', Post, jobDoc.single('attachments'), postControllers.postAjob);
+router.post('/post_job',role('client') , jobDoc.single('attachments'), postControllers.postAjob);
 module.exports = router;

@@ -23,6 +23,11 @@ is_verified: {
     type: Number,
     default: 0, // Default is not verified
 },
+role: {
+    type: String,
+    enum: ['client', 'illustrator', 'admin', 'subadmin'],
+    default: 'client'
+  },
 
 image:{
     type :String,

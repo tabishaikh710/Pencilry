@@ -37,7 +37,7 @@ const verifyToken = async (req, res, next) => {
         });
 
       }
-
+   
 
         const decodedData = jwt.verify(bearerToken, process.env.SECRET_KEY);
 
