@@ -34,6 +34,21 @@ image:{
     required:true
 }
 
-});
+}
+);
+
+userSchema.virtual('clientProfile', {
+    ref: 'Client',
+    localField: '_id',
+    foreignField: 'user',
+    justOne: true
+  });
+
+  userSchema.virtual('illustratorProfile', {
+    ref: 'Illustrator',
+    localField: '_id',
+    foreignField: 'user',
+    justOne: true
+  });
 
 module.exports= mongoose.model("User" , userSchema);
