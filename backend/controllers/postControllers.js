@@ -7,13 +7,7 @@ const extractFilePaths = (file) => {
 };
 
 
-category=async(req,res)=>{
-  try {
-    
-  } catch (error) {
-    
-  }
-}
+
 
 postAjob = async (req, res) => {
   try {
@@ -80,5 +74,5 @@ postAjob = async (req, res) => {
 
 module.exports={
   postAjob,
-category
+
 }
