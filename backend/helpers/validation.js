@@ -1,4 +1,4 @@
-const { check } = require("express-validator");
+const { check , body } = require("express-validator");
 
 exports.registerValidator = [
   check("name", "Name is required").not().isEmpty(),
@@ -74,7 +74,71 @@ exports.updateEmailleValidator = [
 
 
 
+exports.createIllustratorValidator = [
+  check('user')
+    .notEmpty().withMessage('User ID is required')
+    .isMongoId().withMessage('Invalid user ID'),
+
+  check('bio')
+    .optional()
+    .isLength({ max: 500 }).withMessage('Bio cannot exceed 500 characters'),
+
+  check('skills')
+    .isArray({ min: 1 }).withMessage('At least one skill is required'),
+
+  check('socialLinks.website').optional().isURL().withMessage('Invalid website URL'),
+  check('socialLinks.behance').optional().isURL().withMessage('Invalid Behance URL'),
+  check('socialLinks.dribbble').optional().isURL().withMessage('Invalid Dribbble URL'),
+  check('socialLinks.instagram').optional().isURL().withMessage('Invalid Instagram URL'),
+
+  check('hourlyRate')
+    .optional()
+    .isFloat({ min: 0 }).withMessage('Hourly rate must be a positive number'),
+
+  check('availability')
+    .optional()
+    .isIn(['available', 'busy', 'unavailable']).withMessage('Invalid availability'),
+
+  check('specialization')
+    .notEmpty().withMessage('Specialization is required')
+    .isMongoId().withMessage('Invalid specialization ID'),
+
+  check('category')
+    .notEmpty().withMessage('Category is required')
+    .isMongoId().withMessage('Invalid category ID')
+];
 
 
+
+exports. updateIllustratorValidator = [
+  check('bio')
+    .optional()
+    .isLength({ max: 500 }).withMessage('Bio cannot exceed 500 characters'),
+
+  check('skills')
+    .optional()
+    .isArray({ min: 1 }).withMessage('Skills must be a non-empty array'),
+
+  check('socialLinks.website').optional().isURL().withMessage('Invalid website URL'),
+  check('socialLinks.behance').optional().isURL().withMessage('Invalid Behance URL'),
+  check('socialLinks.dribbble').optional().isURL().withMessage('Invalid Dribbble URL'),
+  check('socialLinks.instagram').optional().isURL().withMessage('Invalid Instagram URL'),
+
+  check('hourlyRate')
+    .optional()
+    .isFloat({ min: 0 }).withMessage('Hourly rate must be a positive number'),
+
+  check('availability')
+    .optional()
+    .isIn(['available', 'busy', 'unavailable']).withMessage('Invalid availability'),
+
+  check('specialization')
+    .optional()
+    .isMongoId().withMessage('Invalid specialization ID'),
+
+  check('category')
+    .optional()
+    .isMongoId().withMessage('Invalid category ID')
+];
 
 

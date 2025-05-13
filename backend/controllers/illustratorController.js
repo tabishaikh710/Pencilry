@@ -1,4 +1,9 @@
 const Illustrator = require("../models/illustrator");
+const mailer = require('../helpers/mailer');
+const {deleteFile} = require('../helpers/deleteFile');
+const { validationResult } = require('express-validator');
+const fs = require("fs").promises;
+const path = require("path");
 
 exports.createIllustrator = async (req, res) => {
   try {
@@ -6,7 +11,7 @@ exports.createIllustrator = async (req, res) => {
       bio,
       skills,
       socialLinks,
-      experience,
+     
       hourlyRate,
       availability,
       specialization,
@@ -25,7 +30,7 @@ exports.createIllustrator = async (req, res) => {
       ? skills
       : skills.split(',').map(skill => skill.trim()).filter(Boolean);
 
-    const portfolioPaths = req.file ? [`/portfolio/${req.file.filename}`] : [];
+   
 
     let parsedSocialLinks = {};
     try {
@@ -38,9 +43,9 @@ exports.createIllustrator = async (req, res) => {
       user: req.user._id,
       bio: bio?.trim() || '',
       skills: skillArray,
-      portfolio: portfolioPaths,
+   
       socialLinks: parsedSocialLinks,
-      experience: experience || '',
+      
       hourlyRate,
       availability,
       specialization,
@@ -56,3 +61,95 @@ exports.createIllustrator = async (req, res) => {
     res.status(400).json({ success: false, error: error.message });
   }
 };
+
+
+
+exports.updateIllustrator = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        msg: "Validation error",
+        errors: errors.array(),
+      });
+    }
+
+    const illustrator = await Illustrator.findOne({ user: req.user._id });
+    if (!illustrator) {
+      return res.status(404).json({
+        success: false,
+        msg: "Illustrator profile not found",
+      });
+    }
+
+    // Extract and parse fields from req.body
+    const {
+      bio,
+      skills,
+      socialLinks,
+  
+      hourlyRate,
+      availability,
+      specialization,
+      category,
+    } = req.body;
+
+    const data = {};
+
+    if (bio !== undefined) data.bio = bio;
+
+    if (skills !== undefined) {
+      data.skills = Array.isArray(skills) ? skills : JSON.parse(skills);
+    }
+
+   
+    if (socialLinks !== undefined) {
+      data.socialLinks = typeof socialLinks === 'object' ? socialLinks : JSON.parse(socialLinks);
+    }
+
+    if (hourlyRate !== undefined) data.hourlyRate = hourlyRate;
+    if (availability !== undefined) data.availability = availability;
+    if (specialization !== undefined) data.specialization = specialization;
+    if (category !== undefined) data.category = category;
+
+  
+   
+    const updatedIllustrator = await Illustrator.findByIdAndUpdate(
+      illustrator._id,
+      { $set: data },
+      { new: true, runValidators: true }
+    ).populate("user category specialization");
+
+    return res.status(200).json({
+      success: true,
+      msg: "Illustrator profile updated successfully",
+      illustrator: updatedIllustrator,
+    });
+
+  } catch (error) {
+    console.error("Update Illustrator Error:", error);
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+
+
+exports.getIllustrator = async (req, res) => {
+
+  try {
+
+    
+    
+  } catch (error) {
+     return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      error: error.message,
+    });
+  }
+}
